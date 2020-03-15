@@ -4,15 +4,12 @@ using System.Windows.Input;
 
 namespace PatientСardWpfApp.Views
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class Shell : Window
-    {
+    {                
         public Shell()
         {
             InitializeComponent();
-            DataContext = new PersonalCardVM();
+            DataContext = new MainWindowVM();            
         }
 
         void Window_MouseDown(object sender, MouseButtonEventArgs e)
