@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:local="clr-namespace:PatientСardWpfApp.ViewModels"
+        xmlns:vm="clr-namespace:PatientСardWpfApp.ViewModels"
         mc:Ignorable="d"
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
@@ -175,15 +175,47 @@
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontWeight" Value="Medium"/>
             <Setter Property="FontFamily" Value="Tahoma"/>
-
         </Style>
 
+        <Style x:Key="MyButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource AccentedSquareButtonStyle}">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Background" Value="#060E1F"/>
+            <Setter Property="BorderBrush" Value="#0078d7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="5" Background="#060E1F" BorderBrush="#0078d7" 
+                                BorderThickness="1" Padding="2" x:Name="border">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#506698"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="#F26495ED"/>
+                                <Setter Property="BorderThickness" Value="3"/>
+                                <Setter Property="Margin" Value="-3"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#7AC1FF"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="#AC3C5FE8"/>
+                                <Setter Property="BorderThickness" Value="3"/>
+                                <Setter Property="Margin" Value="0"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="859*"/>
-            <ColumnDefinition Width="145*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="135*"/>
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Column="0">
@@ -199,14 +231,35 @@
                     <DataGridTextColumn Header="Фамилия" Binding="{Binding Path=Surname}" Width="50*"/>
                     <DataGridTextColumn Header="Имя" Binding="{Binding Path=Name}" Width="40*"/>
                     <DataGridTextColumn Header="Отчество" Binding="{Binding Path=Patronymic}" Width="40*"/>
-                    <DataGridComboBoxColumn Header="Пол"  ItemsSource="{Binding SexTypes}" SelectedValueBinding="{Binding Path=Sex}" Width="22*"/>
+                    <DataGridComboBoxColumn Header="Пол"  
+                                            ItemsSource="{Binding Source={x:Static vm:MainWindowVM.SexTypes}}" 
+                                            SelectedValueBinding="{Binding Path=Sex}" Width="22*"/>
                     <DataGridTextColumn Header="Дата рождения" Binding="{Binding Path=Birthday}" Width="37*"/>
                     <DataGridTextColumn Header="Адрес" Binding="{Binding Path=Adress}" Width="75*"/>
                     <DataGridTextColumn Header="Телефон" Binding="{Binding Path=Phone}" Width="45*"/>
                     <DataGridTextColumn Header="Последнее посещение" Binding="{Binding Path=LastVisit}" Width="55*" IsReadOnly="True"/>
                 </DataGrid.Columns>
             </DataGrid>
+        </Grid>
 
+        <Grid Grid.Column="2" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="30*"/>
+            </Grid.RowDefinitions>
+
+            <Button x:Name="btAddNewPatient" Grid.Row="1" Style="{StaticResource MyButtonStyle}"/>
+            <Button x:Name="btDeletePatient" Grid.Row="3" Style="{StaticResource MyButtonStyle}"/>
+            <Button x:Name="btRefrashTable"  Grid.Row="5" Style="{StaticResource MyButtonStyle}"/>
+            <Button x:Name="btLastVisitShow" Grid.Row="7" Style="{StaticResource MyButtonStyle}"/>
+            
         </Grid>
 
     </Grid>
