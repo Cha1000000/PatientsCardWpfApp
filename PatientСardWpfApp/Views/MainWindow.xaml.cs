@@ -4,9 +4,9 @@ using System.Windows.Input;
 
 namespace PatientСardWpfApp.Views
 {
-    public partial class Shell : Window
+    public partial class MainWindow : Window
     {                
-        public Shell()
+        public MainWindow()
         {
             InitializeComponent();
             DataContext = new MainWindowVM();            

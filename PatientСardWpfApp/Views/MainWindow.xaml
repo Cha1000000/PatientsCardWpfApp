@@ -1,4 +1,4 @@
-﻿<Window x:Class="PatientСardWpfApp.Views.Shell"
+﻿<Window x:Class="PatientСardWpfApp.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -233,9 +233,17 @@
            
             <!-- Таблица пациентов -->
             <DataGrid x:Name="dgPatients" Grid.Column="0" Grid.Row="1" 
-                      IsReadOnly="True"
-                      ItemsSource="{Binding Patients}" Style="{StaticResource AzureDataGrid}"
-                      AutoGenerateColumns="False" FontSize="12" FontWeight="Bold" RowStyle="{StaticResource PatientsRowStyle}">
+                      IsReadOnly="True" DataContext="{Binding}" VerticalScrollBarVisibility="Auto"
+                      ItemsSource="{Binding Patients}" SelectedItem="{Binding SelectedPatient, Mode=TwoWay}" Style="{StaticResource AzureDataGrid}"
+                      AutoGenerateColumns="False" FontSize="12" FontWeight="Bold" RowStyle="{StaticResource PatientsRowStyle}"
+                      Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType=Window}}">
+                <DataGrid.ContextMenu>
+                    <ContextMenu DataContext="{Binding PlacementTarget.Tag}">
+                        <MenuItem Header="Открыть карточку пациента" Command="{Binding OpenProfile}"/>
+                        <MenuItem Header="Удалить запись пациента" Command="{Binding ProfileRemove}"/>
+                        <MenuItem Header="Показать историю посещений" Command="{Binding VisitsHistoryShow}"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Фамилия" Binding="{Binding Path=Surname}" Width="50*"/>
                     <DataGridTextColumn Header="Имя" Binding="{Binding Path=Name}" Width="40*"/>
@@ -266,16 +274,20 @@
             </Grid.RowDefinitions>
 
             <Button x:Name="btAddNewPatient" Grid.Row="1" Style="{StaticResource MyButtonStyle}" 
-                    Content="{StaticResource ImageAddProfile}" ToolTip="Добавить данные нового пациента"/>
+                    Content="{StaticResource ImageAddProfile}" ToolTip="Добавить данные нового пациента"
+                    Command="{Binding NewPatientProfile}"/>
+            
             <Button x:Name="btDeletePatient" Grid.Row="3" Style="{StaticResource MyButtonStyle}"
                     Content="{StaticResource ImageDelProfile}" ToolTip="Удалить данные выбранного пациента"
-                    Visibility="Hidden"/>
+                    Visibility="{Binding BtVisibility}" Command="{Binding ProfileRemove}"/>
+            
             <Button x:Name="btProfileEdit"   Grid.Row="5" Style="{StaticResource MyButtonStyle}"
                     Content="{StaticResource ImageEditProfile}" ToolTip="Просмотреть/Редактировать данные пациента"
-                    Visibility="Hidden"/>
+                    Visibility="{Binding BtVisibility}" Command="{Binding OpenProfile}"/>
+            
             <Button x:Name="btLastVisitShow" Grid.Row="7" Style="{StaticResource MyButtonStyle}"
                     Content="{StaticResource ImageLastVisit}" ToolTip="Показать историю посещений"
-                    Visibility="Hidden"/>
+                    Visibility="{Binding BtVisibility}" Command="{Binding VisitsHistoryShow}"/>
             
         </Grid>
 

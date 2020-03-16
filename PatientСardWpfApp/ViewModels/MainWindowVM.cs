@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
+using System.Windows;
 using PatientСardWpfApp.Models;
 using Prism.Mvvm;
 
@@ -30,16 +31,29 @@ namespace PatientСardWpfApp.ViewModels
         private Visit visit;
         public PersonalCard Card {
             get { return card; }
-            set { SetProperty(ref card, value); } 
+            set { SetProperty(ref card, value); }
         }
-        
+
         public Visit pVisit {
             get { return visit; }
             set { SetProperty(ref visit, value); }
-        }        
+        }
+
+        private PersonalCard _selectedPatient;
+        public PersonalCard SelectedPatient {
+            get { return _selectedPatient; }
+            set { SetProperty(ref _selectedPatient, value); }
+        }
+
+        private Visibility _btVisible = Visibility.Hidden;
+        public Visibility BtVisibility {
+            get { return _btVisible; }
+            set { SetProperty(ref _btVisible, value); }
+        }
 
         public static ObservableCollection<string> SexTypes { get; set; } = new ObservableCollection<string>() { "Муж.", "Жен." };
         public ObservableCollection<PersonalCard> Patients { get; set; }
+
         public MainWindowVM()
         {                        
             Patients = new ObservableCollection<PersonalCard>();

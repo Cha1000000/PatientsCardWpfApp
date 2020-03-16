@@ -15,7 +15,7 @@ namespace PatientСardWpfApp
     {
         protected override DependencyObject CreateShell()
         {
-            return Container.Resolve<Shell>();
+            return Container.Resolve<MainWindow>();
         }
 
         /// <summary>Initializes the shell.</summary>
