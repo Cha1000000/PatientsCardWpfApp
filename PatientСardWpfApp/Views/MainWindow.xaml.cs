@@ -14,7 +14,11 @@ namespace PatientСardWpfApp.Views
 
         void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            DragMove();
+            try
+            {
+                DragMove();
+            }
+            catch { }
         }
 
         void btExit_Click(object sender, RoutedEventArgs e)
@@ -31,5 +35,6 @@ namespace PatientСardWpfApp.Views
         {
             WindowState = (WindowState == WindowState.Maximized) ? WindowState.Normal : WindowState.Maximized;
         }
+
     }
 }

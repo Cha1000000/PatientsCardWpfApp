@@ -1,9 +1,7 @@
 ﻿using System.Windows;
-using Autofac;
-using Prism.Autofac;
+using CommonServiceLocator;
 using PatientСardWpfApp.Views;
 using Prism.Unity;
-using Unity;
 
 namespace PatientСardWpfApp
 {
@@ -11,11 +9,12 @@ namespace PatientСardWpfApp
     /// Autofac Bootstrapper 
     /// </summary>
     [System.Obsolete]
-    public class Bootstrapper : UnityBootstrapper //AutofacBootstrapper
+    public class Bootstrapper : UnityBootstrapper
     {
         protected override DependencyObject CreateShell()
         {
-            return Container.Resolve<MainWindow>();
+            //return Container.Resolve<MainWindow>();
+            return ServiceLocator.Current.GetInstance<MainWindow>();
         }
 
         /// <summary>Initializes the shell.</summary>
@@ -26,18 +25,14 @@ namespace PatientСardWpfApp
             Application.Current.MainWindow.Show();
         }
 
-        /// <summary>
-        /// Creates the <see cref="T:Autofac.ContainerBuilder" /> that will be used to create the default container.
-        /// </summary>
-        /// <returns>A new instance of <see cref="T:Autofac.ContainerBuilder" />.</returns>
-        /*protected override ContainerBuilder CreateContainerBuilder()
+        protected override void ConfigureContainer()
         {
-            var builder = new ContainerBuilder();
+            base.ConfigureContainer();
 
-            // регистрация зависимостей в контейнере
-            // должны быть здесь...
+            // Регистрация интерфейсов и классов их реализации
+            /*RegisterTypeIfMissing(typeof(IModuleTracker), typeof(ModuleTracker), true);
+            Container.RegisterInstance<CallbackLogger>(this.callbackLogger);*/
+        }
 
-            return builder;
-        }*/
     }
 }

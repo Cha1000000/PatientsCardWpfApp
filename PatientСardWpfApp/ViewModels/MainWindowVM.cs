@@ -51,8 +51,8 @@ namespace PatientСardWpfApp.ViewModels
             set { SetProperty(ref _btVisible, value); }
         }
 
-        public static ObservableCollection<string> SexTypes { get; set; } = new ObservableCollection<string>() { "Муж.", "Жен." };
-        public ObservableCollection<PersonalCard> Patients { get; set; }
+        public static ObservableCollection<string> SexTypes { get; private set; } = new ObservableCollection<string>() { "Муж.", "Жен." };
+        public ObservableCollection<PersonalCard> Patients { get; private set; }
 
         public MainWindowVM()
         {                        

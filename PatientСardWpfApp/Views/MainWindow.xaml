@@ -232,7 +232,7 @@
             <Label Grid.Column="0" Grid.Row="0" Content="Данные пациентов" FontSize="14" FontWeight="Regular" Foreground="#7ac1ff" Margin="0,-10,0,0"/>
            
             <!-- Таблица пациентов -->
-            <DataGrid x:Name="dgPatients" Grid.Column="0" Grid.Row="1" 
+            <DataGrid x:Name="dgPatients" Grid.Column="0" Grid.Row="1"
                       IsReadOnly="True" DataContext="{Binding}" VerticalScrollBarVisibility="Auto"
                       ItemsSource="{Binding Patients}" SelectedItem="{Binding SelectedPatient, Mode=TwoWay}" Style="{StaticResource AzureDataGrid}"
                       AutoGenerateColumns="False" FontSize="12" FontWeight="Bold" RowStyle="{StaticResource PatientsRowStyle}"
