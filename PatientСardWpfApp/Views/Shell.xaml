@@ -11,6 +11,11 @@
         Title="{Binding DisplayName}" Height="720" Width="1024" Background="#F2121B30"
         WindowStartupLocation="Manual" Style="{DynamicResource ModifiedWindow}">
     <Window.Resources>
+        <Image x:Key="ImageAddProfile" Source="/img/BtAddProfile.png"/>
+        <Image x:Key="ImageDelProfile" Source="/img/ButtonRemoveProfile.png"/>
+        <Image x:Key="ImageEditProfile" Source="/img/BtEditProfile.png"/>
+        <Image x:Key="ImageLastVisit"  Source="/img/Visit.png"/>
+
         <Style TargetType="{x:Type Window}" x:Key="ModifiedWindow">
             <Setter Property="SnapsToDevicePixels" Value="True"/>
             <Setter Property="OverridesDefaultStyle" Value="True"/>
@@ -40,7 +45,7 @@
                                     <RowDefinition Height="22"/>
                                 </Grid.RowDefinitions>
 
-                                <Image Source="/Images/ico.png" HorizontalAlignment="Left" 
+                                <Image Source="/img/ico.png" HorizontalAlignment="Left" 
                                        VerticalAlignment="Center" Margin="6,3,0,3" Stretch="Uniform"/>
                                 <TextBlock Margin="1" Padding="36,4,0,0" Text="{TemplateBinding Title}" VerticalAlignment="Center" 
                                            FontWeight="Bold" FontSize="16" FontFamily="Verdana" Foreground="White"/>
@@ -225,15 +230,20 @@
             </Grid.RowDefinitions>
 
             <Label Grid.Column="0" Grid.Row="0" Content="Данные пациентов" FontSize="14" FontWeight="Regular" Foreground="#7ac1ff" Margin="0,-10,0,0"/>
-            <DataGrid x:Name="dgPatients" Grid.Column="0" Grid.Row="1" ItemsSource="{Binding Patients}" Style="{StaticResource AzureDataGrid}"
+           
+            <!-- Таблица пациентов -->
+            <DataGrid x:Name="dgPatients" Grid.Column="0" Grid.Row="1" 
+                      IsReadOnly="True"
+                      ItemsSource="{Binding Patients}" Style="{StaticResource AzureDataGrid}"
                       AutoGenerateColumns="False" FontSize="12" FontWeight="Bold" RowStyle="{StaticResource PatientsRowStyle}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Фамилия" Binding="{Binding Path=Surname}" Width="50*"/>
                     <DataGridTextColumn Header="Имя" Binding="{Binding Path=Name}" Width="40*"/>
                     <DataGridTextColumn Header="Отчество" Binding="{Binding Path=Patronymic}" Width="40*"/>
-                    <DataGridComboBoxColumn Header="Пол"  
+                    <!--<DataGridComboBoxColumn Header="Пол"  
                                             ItemsSource="{Binding Source={x:Static vm:MainWindowVM.SexTypes}}" 
-                                            SelectedValueBinding="{Binding Path=Sex}" Width="22*"/>
+                                            SelectedValueBinding="{Binding Path=Sex}" Width="22*"/>-->
+                    <DataGridTextColumn Header="Пол" Binding="{Binding Path=Sex}" Width="22*"/>
                     <DataGridTextColumn Header="Дата рождения" Binding="{Binding Path=Birthday}" Width="37*"/>
                     <DataGridTextColumn Header="Адрес" Binding="{Binding Path=Adress}" Width="75*"/>
                     <DataGridTextColumn Header="Телефон" Binding="{Binding Path=Phone}" Width="45*"/>
@@ -255,10 +265,17 @@
                 <RowDefinition Height="30*"/>
             </Grid.RowDefinitions>
 
-            <Button x:Name="btAddNewPatient" Grid.Row="1" Style="{StaticResource MyButtonStyle}"/>
-            <Button x:Name="btDeletePatient" Grid.Row="3" Style="{StaticResource MyButtonStyle}"/>
-            <Button x:Name="btRefrashTable"  Grid.Row="5" Style="{StaticResource MyButtonStyle}"/>
-            <Button x:Name="btLastVisitShow" Grid.Row="7" Style="{StaticResource MyButtonStyle}"/>
+            <Button x:Name="btAddNewPatient" Grid.Row="1" Style="{StaticResource MyButtonStyle}" 
+                    Content="{StaticResource ImageAddProfile}" ToolTip="Добавить данные нового пациента"/>
+            <Button x:Name="btDeletePatient" Grid.Row="3" Style="{StaticResource MyButtonStyle}"
+                    Content="{StaticResource ImageDelProfile}" ToolTip="Удалить данные выбранного пациента"
+                    Visibility="Hidden"/>
+            <Button x:Name="btProfileEdit"   Grid.Row="5" Style="{StaticResource MyButtonStyle}"
+                    Content="{StaticResource ImageEditProfile}" ToolTip="Просмотреть/Редактировать данные пациента"
+                    Visibility="Hidden"/>
+            <Button x:Name="btLastVisitShow" Grid.Row="7" Style="{StaticResource MyButtonStyle}"
+                    Content="{StaticResource ImageLastVisit}" ToolTip="Показать историю посещений"
+                    Visibility="Hidden"/>
             
         </Grid>
 

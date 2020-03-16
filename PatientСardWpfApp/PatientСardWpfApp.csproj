@@ -187,7 +187,7 @@
     <Resource Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\ico.png" />
+    <Resource Include="img\ico.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7">
@@ -200,6 +200,18 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\BtAddProfile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\ButtonRemoveProfile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\BtEditProfile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\Visit.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
