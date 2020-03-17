@@ -2,18 +2,19 @@
 
 namespace PatientСardWpfApp.Models
 {
-    class Visit
+    public class Visit
     {
-        public int pid;
+        public int id;
         public DateTime _date;
         public string _type;
         public string _diagnosis;
+        public int pid;
 
         public Visit() {  }
 
-        public Visit(int id, DateTime dateTime, string vType, string diagnosis)
+        public Visit(int Pid, DateTime dateTime, string vType, string diagnosis)
         {
-            pid = id;
+            pid = Pid;
             _date = dateTime;
             _type = vType;
             _diagnosis = diagnosis;

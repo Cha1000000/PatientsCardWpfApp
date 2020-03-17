@@ -1,0 +1,161 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    x:Class="PatientСardWpfApp.MyTheme">
+    <Style TargetType="{x:Type Window}" x:Key="ModifiedWindow">
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+
+        <Setter Property="AllowsTransparency" Value="True"/>
+        <Setter Property="WindowStyle" Value="None"/>
+        <Setter Property="Opacity" Value="0.95"/>
+
+        <Setter Property="ResizeMode" Value="CanResizeWithGrip"/>
+        <Setter Property="WindowChrome.WindowChrome">
+            <Setter.Value>
+                <WindowChrome NonClientFrameEdges="None" CornerRadius="0" 
+                          ResizeBorderThickness="5" CaptionHeight="8"/>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Window}">
+                    <Border x:Name="TopBd" BorderThickness="0" BorderBrush="DarkGray"
+                                Background="DarkGray">
+                        <Grid Background="{TemplateBinding Background}">
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30" Name="TopRow"/>
+                                <RowDefinition />
+                                <RowDefinition Height="22"/>
+                            </Grid.RowDefinitions>
+
+                            <Image Source="/img/ico.png" HorizontalAlignment="Left" 
+                                       VerticalAlignment="Center" Margin="6,3,0,3" Stretch="Uniform"/>
+                            <TextBlock Margin="1" Padding="36,4,0,0" Text="{TemplateBinding Title}" VerticalAlignment="Center" 
+                                           FontWeight="Bold" FontSize="16" FontFamily="Verdana" Foreground="White"/>
+
+                            <Button Style="{DynamicResource MinimizeButton}" HorizontalAlignment="Right" Margin="0,0,76,6"
+                                        Click="btMin_Click"/>
+                            <Button Style="{DynamicResource MaximizeButton}" HorizontalAlignment="Right" Margin="0,6,42,6"
+                                        Click="Maximize_Click">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border x:Name="Bd" Background="Transparent">
+                                            <Path x:Name="Pt" Data="F1 M 18,23L 58,23L 58,53L 18,53L 18,23 Z M 54,31L 22,31L 22,49L 54,49L 54,31 Z"
+                                                        Stretch="Uniform" Stroke="DarkSlateBlue" StrokeThickness="2"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Bd" Property="Background" Value="Purple"/>
+                                                <Setter TargetName="Pt" Property="Stroke" Value="White"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                            <Button Style="{DynamicResource CloseButton}" Click="btExit_Click" IsCancel="True" Cursor="Hand" 
+                                        Width="32" Height="24" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border x:Name="Bd" Background="Transparent">
+                                            <Path x:Name="Pt" Data="M0,0 M0.2,0.2 L 0.8,0.8 M0.2,0.8 L0.8,0.2 M1,1"
+                                                        Stretch="Uniform" Stroke="DarkSlateBlue" StrokeThickness="2"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Bd" Property="Background" Value="Purple"/>
+                                                <Setter TargetName="Pt" Property="Stroke" Value="White"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+
+                            <Border Background="{TemplateBinding Background}" Grid.Row="1" Name="TopLine">
+                                <AdornerDecorator>
+                                    <ContentPresenter Margin="{TemplateBinding Padding}"
+                                                          Content="{TemplateBinding Content}"/>
+                                </AdornerDecorator>
+                            </Border>
+
+
+                            <ContentPresenter Grid.Row="1" x:Name="MainContent" 
+                                                  Margin="10,8,10,4" HorizontalAlignment="Stretch"
+                                                  Content="{TemplateBinding Content}"/>
+
+
+                            <ResizeGrip x:Name="WindowResizeGrip" Grid.Row="2"
+                                    HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                                    Visibility="Collapsed" IsTabStop="False" />
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="ResizeMode" Value="CanResizeWithGrip">
+                            <Setter TargetName="WindowResizeGrip" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="WindowState" Value="Maximized">
+                            <Setter Property="WindowChrome.WindowChrome">
+                                <Setter.Value>
+                                    <WindowChrome NonClientFrameEdges="None" CornerRadius="0" 
+                                                      ResizeBorderThickness="5" CaptionHeight="18"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="TopRow" Property="Height" Value="32"/>
+                            <Setter TargetName="TopBd" Property="Padding" Value="7,6,6,4"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <EventSetter Event="MouseDown" Handler="Window_MouseDown" />
+    </Style>
+
+    <Style x:Key="MinimizeButton" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="DarkSlateBlue"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="Transparent">
+                        <ContentPresenter Content=" ___ " HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="DarkSlateGray"/>
+                <Setter Property="Foreground" Value="White"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="MaximizeButton" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="Transparent">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="CloseButton" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="Transparent">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

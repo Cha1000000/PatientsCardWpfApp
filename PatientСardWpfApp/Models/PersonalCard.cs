@@ -1,23 +1,25 @@
 ﻿
 using Prism.Mvvm;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 
 namespace PatientСardWpfApp.Models
 {
-    class PersonalCard : BindableBase
+    public class PersonalCard : BindableBase
     {
-        public int _id;
-        public string _name;
-        public string _surname;
-        public string _patronymic;
-        public string _sex;
-        public DateTime _birthday;
-        public string _adress;
-        public string _phone;
+        int _id;
+        string _name;
+        string _surname;
+        string _patronymic;
+        string _sex;
+        DateTime _birthday;
+        string _adress;
+        string _phone;
+        List<Visit> visitsHistory;
 
-        public Visit pVisit;
+        Visit pVisit;
 
         #region Properties
         public int Id
@@ -94,6 +96,11 @@ namespace PatientСardWpfApp.Models
         public string LastVisit
         {
             get { return pVisit?._date.ToString("dd.MM.yyyy"); }
+        }
+
+        public List<Visit> VisitsHistory {
+            get { return visitsHistory; }
+            set { SetProperty(ref visitsHistory, value); }
         }
         #endregion
 

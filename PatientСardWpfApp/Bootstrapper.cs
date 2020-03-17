@@ -1,6 +1,8 @@
 ﻿using System.Windows;
 using CommonServiceLocator;
 using PatientСardWpfApp.Views;
+using PatientСardWpfApp.Interfaces;
+using PatientСardWpfApp.Reposetory;
 using Prism.Unity;
 
 namespace PatientСardWpfApp
@@ -30,8 +32,10 @@ namespace PatientСardWpfApp
             base.ConfigureContainer();
 
             // Регистрация интерфейсов и классов их реализации
-            /*RegisterTypeIfMissing(typeof(IModuleTracker), typeof(ModuleTracker), true);
-            Container.RegisterInstance<CallbackLogger>(this.callbackLogger);*/
+            RegisterTypeIfMissing(typeof(IVisitsAdder), typeof(VisitAdd), true);
+            RegisterTypeIfMissing(typeof(IVisitRemover), typeof(VisitRemove), true);
+
+            /*Container.RegisterInstance<CallbackLogger>(this.callbackLogger);*/
         }
 
     }

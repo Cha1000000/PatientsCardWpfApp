@@ -28,6 +28,7 @@ namespace PatientСardWpfApp.ViewModels
         #endregion
 
         private PersonalCard card;
+        private PersonalCard _selectedPatient;
         private Visit visit;
         public PersonalCard Card {
             get { return card; }
@@ -38,8 +39,7 @@ namespace PatientСardWpfApp.ViewModels
             get { return visit; }
             set { SetProperty(ref visit, value); }
         }
-
-        private PersonalCard _selectedPatient;
+        
         public PersonalCard SelectedPatient {
             get { return _selectedPatient; }
             set { SetProperty(ref _selectedPatient, value); }

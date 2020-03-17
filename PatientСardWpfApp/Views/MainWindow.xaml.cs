@@ -12,29 +12,6 @@ namespace PatientСardWpfApp.Views
             DataContext = new MainWindowVM();            
         }
 
-        void Window_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                DragMove();
-            }
-            catch { }
-        }
-
-        void btExit_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-
-        private void btMin_Click(object sender, RoutedEventArgs e)
-        {
-            WindowState = WindowState.Minimized;
-        }
-        
-        private void Maximize_Click(object sender, RoutedEventArgs e)
-        {
-            WindowState = (WindowState == WindowState.Maximized) ? WindowState.Normal : WindowState.Maximized;
-        }
 
     }
 }

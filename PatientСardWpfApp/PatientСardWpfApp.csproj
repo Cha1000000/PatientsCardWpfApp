@@ -132,6 +132,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="MyTheme.xaml.cs">
+      <DependentUpon>MyTheme.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PatientVisitsHistoryView.xaml.cs">
+      <DependentUpon>PatientVisitsHistoryView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="MyTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -141,13 +151,24 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Interfaces\IPatientAdder.cs" />
+    <Compile Include="Interfaces\IPatientRemover.cs" />
+    <Compile Include="Interfaces\IVisitRemover.cs" />
+    <Compile Include="Interfaces\IVisitsAdder.cs" />
     <Compile Include="Models\PersonalCard.cs" />
     <Compile Include="Models\Visit.cs" />
+    <Compile Include="Reposetory\VisitAdd.cs" />
+    <Compile Include="Reposetory\VisitRemove.cs" />
     <Compile Include="ViewModels\MainWindowVM.cs" />
+    <Compile Include="ViewModels\VisitsHistoryVM.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\PatientVisitsHistoryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -207,5 +228,6 @@
   <ItemGroup>
     <Resource Include="img\Visit.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
