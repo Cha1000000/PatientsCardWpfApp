@@ -138,6 +138,9 @@
     <Compile Include="Views\PatientVisitsHistoryView.xaml.cs">
       <DependentUpon>PatientVisitsHistoryView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\VisitEditView.xaml.cs">
+      <DependentUpon>VisitEditView.xaml</DependentUpon>
+    </Compile>
     <Page Include="MyTheme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -166,6 +169,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\PatientVisitsHistoryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\VisitEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -202,6 +209,7 @@
     <Resource Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="img\Exit.png" />
     <Resource Include="img\ico.png" />
   </ItemGroup>
   <ItemGroup>
@@ -228,6 +236,12 @@
   <ItemGroup>
     <Resource Include="img\Visit.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="img\minus.png" />
+    <Resource Include="img\plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\Edit.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -23,6 +23,8 @@
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontWeight" Value="Medium"/>
             <Setter Property="FontFamily" Value="Tahoma"/>
+
+            <EventSetter Event="LostFocus" Handler="DataGridRow_LostFocus"/>
         </Style>
 
         <Style x:Key="MyButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource AccentedSquareButtonStyle}">
@@ -73,13 +75,15 @@
             </Grid.RowDefinitions>
 
             <Label Grid.Column="0" Grid.Row="0" Content="Данные пациентов" FontSize="14" FontWeight="Regular" Foreground="#7ac1ff" Margin="0,-10,0,0"/>
-           
+
             <!-- Таблица пациентов -->
             <DataGrid x:Name="dgPatients" Grid.Column="0" Grid.Row="1"
                       IsReadOnly="True" DataContext="{Binding}" VerticalScrollBarVisibility="Auto"
-                      ItemsSource="{Binding Patients}" SelectedItem="{Binding SelectedPatient, Mode=TwoWay}" Style="{StaticResource AzureDataGrid}"
+                      ItemsSource="{Binding Patients}" 
+                      SelectedItem="{Binding SelectedPatient, Mode=TwoWay}" Style="{StaticResource AzureDataGrid}"
                       AutoGenerateColumns="False" FontSize="12" FontWeight="Bold" RowStyle="{StaticResource PatientsRowStyle}"
                       Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType=Window}}">
+                
                 <DataGrid.ContextMenu>
                     <ContextMenu DataContext="{Binding PlacementTarget.Tag}">
                         <MenuItem Header="Открыть карточку пациента" Command="{Binding OpenProfile}"/>
@@ -87,6 +91,7 @@
                         <MenuItem Header="Показать историю посещений" Command="{Binding VisitsHistoryShow}"/>
                     </ContextMenu>
                 </DataGrid.ContextMenu>
+                
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Фамилия" Binding="{Binding Path=Surname}" Width="50*"/>
                     <DataGridTextColumn Header="Имя" Binding="{Binding Path=Name}" Width="40*"/>
@@ -119,19 +124,19 @@
             <Button x:Name="btAddNewPatient" Grid.Row="1" Style="{StaticResource MyButtonStyle}" 
                     Content="{StaticResource ImageAddProfile}" ToolTip="Добавить данные нового пациента"
                     Command="{Binding NewPatientProfile}"/>
-            
+
             <Button x:Name="btDeletePatient" Grid.Row="3" Style="{StaticResource MyButtonStyle}"
                     Content="{StaticResource ImageDelProfile}" ToolTip="Удалить данные выбранного пациента"
                     Visibility="{Binding BtVisibility}" Command="{Binding ProfileRemove}"/>
-            
+
             <Button x:Name="btProfileEdit"   Grid.Row="5" Style="{StaticResource MyButtonStyle}"
                     Content="{StaticResource ImageEditProfile}" ToolTip="Просмотреть/Редактировать данные пациента"
                     Visibility="{Binding BtVisibility}" Command="{Binding OpenProfile}"/>
-            
+
             <Button x:Name="btLastVisitShow" Grid.Row="7" Style="{StaticResource MyButtonStyle}"
                     Content="{StaticResource ImageLastVisit}" ToolTip="Показать историю посещений"
                     Visibility="{Binding BtVisibility}" Command="{Binding VisitsHistoryShow}"/>
-            
+
         </Grid>
 
     </Grid>

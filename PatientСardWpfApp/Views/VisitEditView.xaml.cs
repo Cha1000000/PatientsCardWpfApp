@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace PatientСardWpfApp.Views
 {
     /// <summary>
-    /// Логика взаимодействия для PatientVisitsHistoryView.xaml
+    /// Логика взаимодействия для VisitEditView.xaml
     /// </summary>
-    public partial class PatientVisitsHistoryView : Window
+    public partial class VisitEditView : Window
     {
-        public PatientVisitsHistoryView()
+        public VisitEditView()
         {
             InitializeComponent();
         }
@@ -31,16 +31,6 @@ namespace PatientСardWpfApp.Views
                 DragMove();
             }
             catch { }
-        }
-
-        private void DataGridRow_LostFocus(object sender, RoutedEventArgs e)
-        {
-            dgHistory.UnselectAll();
-        }
-
-        private void btExit_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
         }
     }
 }

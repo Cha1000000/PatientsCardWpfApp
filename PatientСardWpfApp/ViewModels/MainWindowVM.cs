@@ -30,23 +30,31 @@ namespace PatientСardWpfApp.ViewModels
         private PersonalCard card;
         private PersonalCard _selectedPatient;
         private Visit visit;
-        public PersonalCard Card {
+        public PersonalCard Card
+        {
             get { return card; }
             set { SetProperty(ref card, value); }
         }
 
-        public Visit pVisit {
+        public Visit pVisit
+        {
             get { return visit; }
             set { SetProperty(ref visit, value); }
         }
-        
-        public PersonalCard SelectedPatient {
+
+        public PersonalCard SelectedPatient
+        {
             get { return _selectedPatient; }
-            set { SetProperty(ref _selectedPatient, value); }
+            set
+            {
+                SetProperty(ref _selectedPatient, value);
+                BtVisibility = (_selectedPatient != null) ? Visibility.Visible : Visibility.Hidden;
+            }
         }
 
         private Visibility _btVisible = Visibility.Hidden;
-        public Visibility BtVisibility {
+        public Visibility BtVisibility
+        {
             get { return _btVisible; }
             set { SetProperty(ref _btVisible, value); }
         }
@@ -55,11 +63,11 @@ namespace PatientСardWpfApp.ViewModels
         public ObservableCollection<PersonalCard> Patients { get; private set; }
 
         public MainWindowVM()
-        {                        
+        {
             Patients = new ObservableCollection<PersonalCard>();
 
             pVisit = new Visit(1, DateTime.Now, "Первичный", "Хронический бронхит");
-            Card = new PersonalCard(1, "Иванов", "Иван", "Иванович", SexTypes[0], "15.03.1989", "+79191331239", "Курск, ул. Домосторителей, 1", pVisit);            
+            Card = new PersonalCard(1, "Иванов", "Иван", "Иванович", SexTypes[0], "15.03.1989", "+79191331239", "Курск, ул. Домосторителей, 1", pVisit);
             Patients.Add(Card);
         }
     }

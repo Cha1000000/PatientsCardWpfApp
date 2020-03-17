@@ -1,12 +1,8 @@
 ﻿using PatientСardWpfApp.Models;
 using PatientСardWpfApp.Interfaces;
 using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
+using System.ComponentModel;
 
 namespace PatientСardWpfApp.ViewModels
 {
@@ -23,14 +19,26 @@ namespace PatientСardWpfApp.ViewModels
         #endregion
 
         private Visit visit;
-
+        private Visit _selectedRecord;
         public Visit Visit
         {
             get { return visit; }
             set { SetProperty(ref visit, value); }
         }
+         public Visit SelectedRecord
+        {
+            get { return _selectedRecord; }
+            set { SetProperty(ref _selectedRecord, value); }
+        }
 
-        public ObservableCollection<Visit> PatientVisitsHistory = new ObservableCollection<Visit>();
+        private Visibility _btVisible = Visibility.Hidden;
+        public Visibility BtVisibility
+        {
+            get { return _btVisible; }
+            set { SetProperty(ref _btVisible, value); }
+        }
+
+        public BindingList<Visit> PatientVisitsHistory = new BindingList<Visit>();
 
         public IVisitsAdder Adder { get; set; }
         public IVisitRemover Remover { get; set; }
@@ -42,6 +50,8 @@ namespace PatientСardWpfApp.ViewModels
                 string FullName = string.Join(" ", Patient.Surname, Patient.Name, Patient.Patronymic);
                 DisplayName += $": {FullName}";
             }
+
+            //Загрузить данные из БД, соответственно id пациента, в PatientVisitsHistory
         }
 
 

@@ -12,6 +12,9 @@ namespace PatientСardWpfApp.Views
             DataContext = new MainWindowVM();            
         }
 
-
+        private void DataGridRow_LostFocus(object sender, RoutedEventArgs e)
+        {
+            dgPatients.UnselectAll();
+        }
     }
 }

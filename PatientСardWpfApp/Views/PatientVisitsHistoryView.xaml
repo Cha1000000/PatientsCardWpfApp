@@ -5,8 +5,111 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PatientСardWpfApp.Views"
         mc:Ignorable="d"
-        Title="PatientVisitsHistoryView" Height="450" Width="800">
-    <Grid>
+        Title="{Binding DisplayName}" Height="400" Width="560" Background="#F2121B30"
+        WindowStartupLocation="Manual" WindowStyle="None" ResizeMode="CanResizeWithGrip"
+        MouseDown="Window_MouseDown">
+    
+    <Window.Resources>
+        <Image x:Key="ImageAdd" Source="/img/plus.png"/>
+        <Image x:Key="ImageDel" Source="/img/minus.png"/>
+        <Image x:Key="ImageEdit" Source="/img/Edit.png"/>
+        <Image x:Key="ImageExit"  Source="/img/Exit.png"/>
+
+        <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource AzureDataGridRow}" x:Key="TableRowStyle">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="FontFamily" Value="Tahoma"/>
+            <Setter Property="Height" Value="Auto"/>
+            <EventSetter Event="LostFocus" Handler="DataGridRow_LostFocus"/>
+        </Style>
+
+        <Style x:Key="MyButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource AccentedSquareButtonStyle}">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Background" Value="#060E1F"/>
+            <Setter Property="BorderBrush" Value="#0078d7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="5" Background="#060E1F" BorderBrush="#0078d7" 
+                                BorderThickness="1" Padding="2" x:Name="border">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#506698"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="#F26495ED"/>
+                                <Setter Property="BorderThickness" Value="3"/>
+                                <Setter Property="Margin" Value="-3"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#7AC1FF"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="#AC3C5FE8"/>
+                                <Setter Property="BorderThickness" Value="3"/>
+                                <Setter Property="Margin" Value="0"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
         
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="139*"/>
+            <ColumnDefinition Width="45*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="365*"/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Grid.ColumnSpan="2" Content="{Binding DisplayName}" 
+               FontSize="14" FontWeight="Bold" Foreground="#7ac1ff" VerticalAlignment="Bottom"/>
+
+        <DataGrid x:Name="dgHistory" Grid.Row="1" IsReadOnly="True" RowStyle="{StaticResource TableRowStyle}"
+                  AutoGenerateColumns="False" Margin="5" FontSize="12" FontWeight="Bold" Style="{StaticResource AzureDataGrid}"
+                  DataContext="{Binding}" 
+                  ItemsSource="{Binding PatientVisitsHistory}" SelectedItem="{Binding SelectedRecord, Mode=TwoWay}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header=" Дата" Binding="{Binding Path=Date}" Width="70"/>
+                <DataGridTextColumn Header="Тип посещения" Binding="{Binding Path=VisitType}" Width="135"/>
+                <DataGridTextColumn Header=" Диагноз" Binding="{Binding Path=Description}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Grid Grid.Column="1" Grid.Row="1" Margin="20,10,20,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="40*"/>
+                <RowDefinition Height="20*"/>
+            </Grid.RowDefinitions>
+
+            <Button x:Name="btAddNewPatient" Grid.Row="1" Style="{StaticResource MyButtonStyle}" 
+                    Content="{StaticResource ImageAdd}" ToolTip="Добавить запись"
+                    Command="{Binding AddNewRecord}"/>
+
+            <Button x:Name="btDeletePatient" Grid.Row="3" Style="{StaticResource MyButtonStyle}"
+                    Content="{StaticResource ImageDel}" ToolTip="Удалить запись"
+                    Visibility="{Binding BtVisibility}" Command="{Binding RemoveRecord}"/>
+
+            <Button x:Name="btProfileEdit"   Grid.Row="5" Style="{StaticResource MyButtonStyle}"
+                    Content="{StaticResource ImageEdit}" ToolTip="Редактировать запись"
+                    Visibility="{Binding BtVisibility}" Command="{Binding EditRecord}"/>
+
+            <Button x:Name="btExit" Grid.Row="7" Style="{StaticResource MyButtonStyle}"
+                    Content="{StaticResource ImageExit}" ToolTip="Закрыть окно"
+                    Visibility="{Binding BtVisibility}"  Click="btExit_Click"/>
+
+        </Grid>
     </Grid>
 </Window>
