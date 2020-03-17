@@ -3,7 +3,10 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Windows;
+using System.Windows.Input;
 using PatientСardWpfApp.Models;
+using PatientСardWpfApp.Views;
+using Prism.Commands;
 using Prism.Mvvm;
 
 namespace PatientСardWpfApp.ViewModels
@@ -62,6 +65,12 @@ namespace PatientСardWpfApp.ViewModels
         public static ObservableCollection<string> SexTypes { get; private set; } = new ObservableCollection<string>() { "Муж.", "Жен." };
         public ObservableCollection<PersonalCard> Patients { get; private set; }
 
+        public ICommand NewPatientProfile { get; private set; }
+        public ICommand ProfileRemove { get; private set; }
+        public ICommand OpenProfile { get; private set; }
+        public ICommand VisitsHistoryShow { get; private set; }
+        //public DelegateCommand<object> VisitsHistoryShow { get; }
+
         public MainWindowVM()
         {
             Patients = new ObservableCollection<PersonalCard>();
@@ -69,6 +78,21 @@ namespace PatientСardWpfApp.ViewModels
             pVisit = new Visit(1, DateTime.Now, "Первичный", "Хронический бронхит");
             Card = new PersonalCard(1, "Иванов", "Иван", "Иванович", SexTypes[0], "15.03.1989", "+79191331239", "Курск, ул. Домосторителей, 1", pVisit);
             Patients.Add(Card);
+
+            VisitsHistoryShow = new DelegateCommand(ShowVisitsHistoryView);
         }
+
+        private void ShowVisitsHistoryView()
+        {
+            if (SelectedPatient != null)
+            {
+                var PHView = new PatientVisitsHistoryView();
+                PHView.DataContext = new VisitsHistoryVM(SelectedPatient);                
+                PHView.ShowDialog();
+            }
+            else
+                throw new Exception("Невозможно отобразить данные. Укажите пациента из списка и повторите попытку.");            
+        }
+
     }
 }

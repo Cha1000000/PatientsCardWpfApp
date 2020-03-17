@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:PatientСardWpfApp.Views"
         mc:Ignorable="d"
         Title="{Binding DisplayName}" Height="400" Width="560" Background="#F2121B30"
-        WindowStartupLocation="Manual" WindowStyle="None" ResizeMode="CanResizeWithGrip"
-        MouseDown="Window_MouseDown">
-    
+        WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="CanResizeWithGrip"
+        Opacity="0.99" AllowsTransparency="True" MouseDown="Window_MouseDown">
+
     <Window.Resources>
         <Image x:Key="ImageAdd" Source="/img/plus.png"/>
         <Image x:Key="ImageDel" Source="/img/minus.png"/>
@@ -57,7 +57,6 @@
             </Setter>
         </Style>
     </Window.Resources>
-        
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="139*"/>
@@ -107,8 +106,7 @@
                     Visibility="{Binding BtVisibility}" Command="{Binding EditRecord}"/>
 
             <Button x:Name="btExit" Grid.Row="7" Style="{StaticResource MyButtonStyle}"
-                    Content="{StaticResource ImageExit}" ToolTip="Закрыть окно"
-                    Visibility="{Binding BtVisibility}"  Click="btExit_Click"/>
+                    Content="{StaticResource ImageExit}" ToolTip="Закрыть окно" Click="btExit_Click"/>
 
         </Grid>
     </Grid>

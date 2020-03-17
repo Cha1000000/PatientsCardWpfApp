@@ -24,7 +24,7 @@
             <Setter Property="FontWeight" Value="Medium"/>
             <Setter Property="FontFamily" Value="Tahoma"/>
 
-            <EventSetter Event="LostFocus" Handler="DataGridRow_LostFocus"/>
+            <EventSetter Event="Unselected" Handler="DataGridRow_Unselected"/>
         </Style>
 
         <Style x:Key="MyButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource AccentedSquareButtonStyle}">
@@ -129,13 +129,13 @@
                     Content="{StaticResource ImageDelProfile}" ToolTip="Удалить данные выбранного пациента"
                     Visibility="{Binding BtVisibility}" Command="{Binding ProfileRemove}"/>
 
-            <Button x:Name="btProfileEdit"   Grid.Row="5" Style="{StaticResource MyButtonStyle}"
+            <Button x:Name="btProfileEdit" Grid.Row="5" Style="{StaticResource MyButtonStyle}"
                     Content="{StaticResource ImageEditProfile}" ToolTip="Просмотреть/Редактировать данные пациента"
                     Visibility="{Binding BtVisibility}" Command="{Binding OpenProfile}"/>
 
-            <Button x:Name="btLastVisitShow" Grid.Row="7" Style="{StaticResource MyButtonStyle}"
+            <Button x:Name="btVisitsShow" Grid.Row="7" Style="{StaticResource MyButtonStyle}"
                     Content="{StaticResource ImageLastVisit}" ToolTip="Показать историю посещений"
-                    Visibility="{Binding BtVisibility}" Command="{Binding VisitsHistoryShow}"/>
+                    Visibility="{Binding BtVisibility}" Command="{Binding Path=VisitsHistoryShow}"/>
 
         </Grid>
 

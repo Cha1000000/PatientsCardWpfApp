@@ -90,9 +90,10 @@
                      TextWrapping="Wrap" VerticalAlignment="Top" Height="137" Width="373"
                      FontSize="16" FontFamily="Arial" AcceptsReturn="True" AcceptsTab="True"
                      SpellCheck.IsEnabled="True" Language="ru-ru"/>
+            <Calendar Grid.RowSpan="3" Height="39" VerticalAlignment="Bottom" Margin="0,0,0,4" />
 
         </Grid>
-        
+
         <Button Content="Закрыть" Foreground="DodgerBlue" FontFamily="Lucida Sans Unicode" FontSize="14" 
                 HorizontalAlignment="Right" Margin="0,13,15,0" Grid.Row="2"
                 VerticalAlignment="Top" Width="75" Height="30" Style="{StaticResource MyButtonStyle}"/>
