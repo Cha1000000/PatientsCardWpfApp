@@ -141,6 +141,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Interfaces\IContentUpdater.cs" />
     <Compile Include="Migrations\202003191620171_InitialCreate.cs" />
     <Compile Include="Migrations\202003191620171_InitialCreate.designer.cs">
       <DependentUpon>202003191620171_InitialCreate.cs</DependentUpon>
@@ -149,11 +150,21 @@
     <Compile Include="Migrations\202003191942086_AddPatUrl.designer.cs">
       <DependentUpon>202003191942086_AddPatUrl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003192308373_AddValidation.cs" />
+    <Compile Include="Migrations\202003192308373_AddValidation.designer.cs">
+      <DependentUpon>202003192308373_AddValidation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003192312258_EditValidation.cs" />
+    <Compile Include="Migrations\202003192312258_EditValidation.designer.cs">
+      <DependentUpon>202003192312258_EditValidation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppDBContent.cs" />
     <Compile Include="MyTheme.xaml.cs">
       <DependentUpon>MyTheme.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Reposetory\VisitsHistoryUpdate.cs" />
+    <Compile Include="Reposetory\PatientListUpdate.cs" />
     <Compile Include="ViewModels\ProfileViewModel.cs" />
     <Compile Include="ViewModels\VisitEditorVM.cs" />
     <Compile Include="Views\ProfileView.xaml.cs">
@@ -224,6 +235,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003191942086_AddPatUrl.resx">
       <DependentUpon>202003191942086_AddPatUrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003192308373_AddValidation.resx">
+      <DependentUpon>202003192308373_AddValidation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003192312258_EditValidation.resx">
+      <DependentUpon>202003192312258_EditValidation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

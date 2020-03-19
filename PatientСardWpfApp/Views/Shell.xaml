@@ -84,11 +84,11 @@
 
             <!-- Таблица пациентов -->
             <DataGrid x:Name="dgPatients" Grid.Column="0" Grid.Row="1"
-                      IsReadOnly="True" DataContext="{Binding}" VerticalScrollBarVisibility="Auto"
-                      ItemsSource="{Binding Patients}" 
-                      SelectedItem="{Binding SelectedPatient, Mode=TwoWay}" Style="{StaticResource AzureDataGrid}"
+                      IsReadOnly="True"
+                      ItemsSource="{Binding Path=Patients}" 
+                      SelectedItem="{Binding Path=SelectedPatient, Mode=TwoWay}" Style="{StaticResource AzureDataGrid}"
                       AutoGenerateColumns="False" FontSize="12" FontWeight="Bold" RowStyle="{StaticResource PatientsRowStyle}"
-                      Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType=Window}}">
+                      Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType=DataGridRow}}">
 
                 <DataGrid.ContextMenu>
                     <ContextMenu DataContext="{Binding PlacementTarget.Tag}">

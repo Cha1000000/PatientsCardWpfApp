@@ -1,15 +1,19 @@
 ﻿using PatientСardWpfApp.Models;
+using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Windows;
+using System.Windows.Input;
 
 namespace PatientСardWpfApp.ViewModels
 {
     class ProfileViewModel : BindableBase
     {
+        private int curWin = App.Current.Windows.Count - 2;
+
         #region Public Properties
         private PersonalCard _patient;
         public PersonalCard Patient
@@ -87,10 +91,51 @@ namespace PatientСardWpfApp.ViewModels
 
         #endregion
 
+        #region Сохранить запись
+        private DelegateCommand saveRecCommand;
+
+        public ICommand SaveRecordCommand
+        {
+            get
+            {
+                if (saveRecCommand == null)
+                {
+                    saveRecCommand = new DelegateCommand(SaveRecord);
+                }
+                return saveRecCommand;
+            }
+        }
+
+        private void SaveRecord()
+        {
+            if (Patient != null)
+                using (AppDBContent content = new AppDBContent())
+                {
+                    var results = new List<ValidationResult>();
+                    var context = new ValidationContext(Patient);
+                    if (!Validator.TryValidateObject(Patient, context, results, true))
+                    {
+                        string errorText = string.Empty;
+                        foreach (var error in results)
+                        {
+                            errorText += error.ErrorMessage + "\n";
+                        }
+                        MessageBox.Show(errorText, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                    content.PersonalCards.Add(Patient);
+                    content.SaveChanges();
+                    //ShellViewModel.Patients = (BindingList<PersonalCard>)ShellViewModel.Updater.Update();
+                    MessageBox.Show("Данные успешно сохранены.", "Сообщение");
+                }
+            else
+                MessageBox.Show("Ошибка сохранения записи.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            App.Current.Windows[curWin].Close();
+        }
+        #endregion
         public ProfileViewModel (PersonalCard patientData)
         {
             Patient = patientData ?? new PersonalCard();
-
         }
 
     }

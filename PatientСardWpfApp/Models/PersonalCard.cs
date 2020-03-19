@@ -14,7 +14,7 @@ namespace PatientСardWpfApp.Models
         string _surname;
         string _patronymic;
         string _sex;
-        DateTime _birthday;
+        DateTime _birthday = new DateTime(1920,01,01);
         string _adress;
         string _phone;
 
@@ -26,8 +26,8 @@ namespace PatientСardWpfApp.Models
         }
 
         [Display(Name = "Имя")]
-        [StringLength(25)]
-        [Required(ErrorMessage = "Длина имени не менее 5 символов")]
+        [StringLength(25, MinimumLength = 2)]
+        [Required(ErrorMessage = "Длина имени не менее 2 символов")]
         public string Name
         {
             get { return _name; }
@@ -35,8 +35,8 @@ namespace PatientСardWpfApp.Models
         }
 
         [Display(Name = "Фамилия")]
-        [StringLength(25)]
-        [Required(ErrorMessage = "Длина фамилии не менее 3 символов")]
+        [StringLength(25, MinimumLength = 2)]
+        [Required(ErrorMessage = "Длина фамилии не менее 2 символов")]
         public string Surname
         {
             get { return _surname; }
@@ -44,8 +44,8 @@ namespace PatientСardWpfApp.Models
         }
 
         [Display(Name = "Отчество")]
-        [StringLength(25)]
-        [Required(ErrorMessage = "Длина отчества не менее 5 символов")]
+        [StringLength(25, MinimumLength = 6)]
+        [Required(ErrorMessage = "Длина отчества не менее 6 символов", AllowEmptyStrings =true)]
         public string Patronymic
         {
             get { return _patronymic; }
@@ -76,7 +76,7 @@ namespace PatientСardWpfApp.Models
         }
 
         [Display(Name = "Адрес")]
-        [StringLength(50)]
+        [StringLength(50, MinimumLength = 15)]
         [Required(ErrorMessage = "Длина адреса не менее 15 символов")]
         public string Adress
         {
@@ -86,8 +86,9 @@ namespace PatientСardWpfApp.Models
 
         [Display(Name = "Номер телефона")]
         [DataType(DataType.PhoneNumber)]
-        [StringLength(12)]
-        [Required(ErrorMessage = "Длин номера не менее 10 символов")]
+        [StringLength(16)]
+        [RegularExpression(@"^\+[1-9]\d{3}-\d{3}-\d{4}$", ErrorMessage = "Номер телефона должен иметь формат +xxxx-xxx-xx-xx")]
+        [Required(AllowEmptyStrings =true)]
         public string Phone
         {
             get { return _phone; }

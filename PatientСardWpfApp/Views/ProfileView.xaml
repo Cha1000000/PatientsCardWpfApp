@@ -6,7 +6,7 @@
         xmlns:vm="clr-namespace:PatientСardWpfApp.ViewModels"
         mc:Ignorable="d"
         Title="ProfileView" Height="500" Width="400" Style="{StaticResource WindowsSimpleStyle}"
-        WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        WindowStartupLocation="Manual" ResizeMode="NoResize">
     <Window.Resources>
         <Style x:Key="LabelStyle" TargetType="Label">
             <Setter Property="FontFamily" Value="Verdana"/>
@@ -65,8 +65,8 @@
             <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="45*"/>
-            <RowDefinition Height="23*"/>
+            <RowDefinition Height="40*"/>
+            <RowDefinition Height="28*"/>
 
             <RowDefinition Height="36*"/>
             <RowDefinition Height="9*"/>
@@ -87,7 +87,7 @@
             <RowDefinition Height="19*"/>
         </Grid.RowDefinitions>
 
-        <Border Grid.ColumnSpan="5" Background="#C01D2033">
+        <Border Grid.ColumnSpan="5" Background="#AA1A2033">
             <Label Content="Персональные данные пациента" HorizontalAlignment="Center"
                FontSize="18" FontWeight="Bold" Foreground="LightCyan" 
                FontFamily="Verdana" VerticalAlignment="Center"/>
@@ -108,7 +108,8 @@
                   ItemsSource="{Binding Source={x:Static vm:ShellViewModel.SexTypes}}" SelectedValue="{Binding Path=Sex, Mode=TwoWay}"/>
         <DatePicker Grid.Row="10" Grid.Column="3" FontSize="18" VerticalContentAlignment="Center" SelectedDate="{Binding Path=Birthday, Mode=TwoWay}"/>
         <TextBox Grid.Row="12" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding Path=Phone, Mode=TwoWay}"/>
-        <TextBox Grid.Row="14" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding Path=Adress, Mode=TwoWay}"/>
+        <TextBox Grid.Row="14" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding Path=Adress, Mode=TwoWay}"
+                 TextWrapping="Wrap" VerticalContentAlignment="Top"/>
 
         <Button Grid.Row="16" Grid.Column="1"
                 Content="Отмена" Foreground="DodgerBlue" FontFamily="Verdana" FontSize="16" 
@@ -116,7 +117,7 @@
                 VerticalAlignment="Stretch" Style="{StaticResource MyButtonStyle}"/>
         <Button Grid.Row="16" Grid.Column="3"
                 Content="ЗАПИСАТЬ" Foreground="DodgerBlue" FontFamily="Verdana" FontSize="16" 
-                HorizontalAlignment="Stretch" Margin="16,2"
+                HorizontalAlignment="Stretch" Margin="16,2" Command="{Binding SaveRecordCommand}"
                 VerticalAlignment="Stretch" Style="{StaticResource MyButtonStyle}"/>
 
     </Grid>

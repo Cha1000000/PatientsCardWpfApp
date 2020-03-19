@@ -31,6 +31,8 @@ namespace PatientСardWpfApp
             // Регистрация интерфейсов и классов их реализации
             RegisterTypeIfMissing(typeof(IVisitsAdder), typeof(VisitAdd), true);
             RegisterTypeIfMissing(typeof(IVisitRemover), typeof(VisitRemove), true);
+            RegisterTypeIfMissing(typeof(IContentUpdater), typeof(PatientListUpdate), true);
+            RegisterTypeIfMissing(typeof(IContentUpdater), typeof(VisitsHistoryUpdate), true);
 
             /*Container.RegisterInstance<CallbackLogger>(this.callbackLogger);*/
         }
