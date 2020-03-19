@@ -7,7 +7,7 @@ namespace PatientСardWpfApp
     /// </summary>
     public partial class App : Application
     {
-        
+        [System.Obsolete]
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);

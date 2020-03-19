@@ -1,0 +1,123 @@
+﻿<Window x:Class="PatientСardWpfApp.Views.ProfileView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:PatientСardWpfApp.ViewModels"
+        mc:Ignorable="d"
+        Title="ProfileView" Height="500" Width="400" Style="{StaticResource WindowsSimpleStyle}"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Window.Resources>
+        <Style x:Key="LabelStyle" TargetType="Label">
+            <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Foreground" Value="AliceBlue"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="TextBoxStyle" TargetType="TextBox">
+            <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Padding" Value="2"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="MyButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource AccentedSquareButtonStyle}">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Background" Value="#060E1F"/>
+            <Setter Property="BorderBrush" Value="#0078d7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="5" Background="#060E1F" BorderBrush="#0078d7" 
+                                BorderThickness="1" Padding="2" x:Name="border">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#506698"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="#F26495ED"/>
+                                <Setter Property="BorderThickness" Value="3"/>
+                                <Setter Property="Margin" Value="-3"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#7AC1FF"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="#AC3C5FE8"/>
+                                <Setter Property="BorderThickness" Value="3"/>
+                                <Setter Property="Margin" Value="0"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="34*"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="37*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="45*"/>
+            <RowDefinition Height="23*"/>
+
+            <RowDefinition Height="36*"/>
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="37*"/>
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="37*"/>
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="36*"/>
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="37*"/>
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="35*"/>
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="70*"/>
+            <RowDefinition Height="21*"/>
+            <RowDefinition Height="50*"/>
+
+            <RowDefinition Height="19*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.ColumnSpan="5" Background="#C01D2033">
+            <Label Content="Персональные данные пациента" HorizontalAlignment="Center"
+               FontSize="18" FontWeight="Bold" Foreground="LightCyan" 
+               FontFamily="Verdana" VerticalAlignment="Center"/>
+        </Border>
+
+        <Label Grid.Row="2" Grid.Column="1" Style="{StaticResource LabelStyle}" Content="Фамилия"/>
+        <Label Grid.Row="4" Grid.Column="1" Style="{StaticResource LabelStyle}" Content="Имя"/>
+        <Label Grid.Row="6" Grid.Column="1" Style="{StaticResource LabelStyle}" Content="Отчество"/>
+        <Label Grid.Row="8" Grid.Column="1" Style="{StaticResource LabelStyle}" Content="Пол"/>
+        <Label Grid.Row="10" Grid.Column="1" Style="{StaticResource LabelStyle}" Content="Дата рождения"/>
+        <Label Grid.Row="12" Grid.Column="1" Style="{StaticResource LabelStyle}" Content="Телефон"/>
+        <Label Grid.Row="14" Grid.Column="1" Style="{StaticResource LabelStyle}" Content="Адрес" VerticalContentAlignment="Top"/>
+
+        <TextBox Grid.Row="2" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding Path=Surname, Mode=TwoWay}"/>
+        <TextBox Grid.Row="4" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding Path=Name, Mode=TwoWay}"/>
+        <TextBox Grid.Row="6" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding Path=Patronymic, Mode=TwoWay}"/>
+        <ComboBox Grid.Row="8" Grid.Column="3" FontSize="18" FontFamily="Verdana" VerticalContentAlignment="Center"
+                  ItemsSource="{Binding Source={x:Static vm:ShellViewModel.SexTypes}}" SelectedValue="{Binding Path=Sex, Mode=TwoWay}"/>
+        <DatePicker Grid.Row="10" Grid.Column="3" FontSize="18" VerticalContentAlignment="Center" SelectedDate="{Binding Path=Birthday, Mode=TwoWay}"/>
+        <TextBox Grid.Row="12" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding Path=Phone, Mode=TwoWay}"/>
+        <TextBox Grid.Row="14" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding Path=Adress, Mode=TwoWay}"/>
+
+        <Button Grid.Row="16" Grid.Column="1"
+                Content="Отмена" Foreground="DodgerBlue" FontFamily="Verdana" FontSize="16" 
+                HorizontalAlignment="Stretch" Margin="14,2" Click="Button_Click"
+                VerticalAlignment="Stretch" Style="{StaticResource MyButtonStyle}"/>
+        <Button Grid.Row="16" Grid.Column="3"
+                Content="ЗАПИСАТЬ" Foreground="DodgerBlue" FontFamily="Verdana" FontSize="16" 
+                HorizontalAlignment="Stretch" Margin="16,2"
+                VerticalAlignment="Stretch" Style="{StaticResource MyButtonStyle}"/>
+
+    </Grid>
+</Window>

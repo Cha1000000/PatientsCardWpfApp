@@ -7,16 +7,13 @@ using Prism.Unity;
 
 namespace PatientСardWpfApp
 {
-    /// <summary>
-    /// Autofac Bootstrapper 
-    /// </summary>
     [System.Obsolete]
     public class Bootstrapper : UnityBootstrapper
     {
         protected override DependencyObject CreateShell()
         {
-            //return Container.Resolve<MainWindow>();
-            return ServiceLocator.Current.GetInstance<MainWindow>();
+            //return Container.TryResolve<Shell>();
+            return ServiceLocator.Current.GetInstance<Shell>();
         }
 
         /// <summary>Initializes the shell.</summary>

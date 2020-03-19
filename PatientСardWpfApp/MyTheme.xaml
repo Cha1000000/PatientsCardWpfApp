@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     x:Class="PatientСardWpfApp.MyTheme">
     
-    <Style TargetType="{x:Type Window}" x:Key="ModifiedWindow">
+    <Style TargetType="{x:Type Window}" x:Key="MainWindow">
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="OverridesDefaultStyle" Value="True"/>
 
@@ -111,6 +111,17 @@
         </Setter>
 
         <EventSetter Event="MouseDown" Handler="Window_MouseDown" />
+    </Style>
+
+    <Style TargetType="{x:Type Window}" x:Key="WindowsSimpleStyle">
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="AllowsTransparency" Value="True"/>
+        <Setter Property="WindowStyle" Value="None"/>
+        <Setter Property="Opacity" Value="0.99"/>
+        <Setter Property="ResizeMode" Value="CanResizeWithGrip"/>
+        <Setter Property="Background" Value="#F2121B30"/>
+
+        <EventSetter Event="MouseDown" Handler="Window_MouseDown"/>
     </Style>
 
     <Style x:Key="MinimizeButton" TargetType="{x:Type Button}">

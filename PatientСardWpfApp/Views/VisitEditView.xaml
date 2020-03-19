@@ -5,12 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PatientСardWpfApp.Views"
         mc:Ignorable="d"
-        Title="Сведения о посещении" Height="334.667" Width="416" 
-        WindowStyle="None" Background="#F2121B30" MouseDown="Window_MouseDown">
+        Title="Сведения о посещении" Height="330" Width="415" 
+        WindowStartupLocation="CenterScreen" Style="{StaticResource WindowsSimpleStyle}"
+        ResizeMode="NoResize">
 
     <Window.Resources>
-        <Image x:Key="ImageExit"  Source="/img/Exit.png"/>
-
         <Style x:Key="MyButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource AccentedSquareButtonStyle}">
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -73,30 +72,34 @@
                 <RowDefinition Height="140*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="188*"/>
+                <ColumnDefinition Width="179*"/>
+                <ColumnDefinition Width="9*"/>
                 <ColumnDefinition Width="185*"/>
             </Grid.ColumnDefinitions>
 
             <Label Grid.Row="0" Content="Дата" 
-               Style="{StaticResource LablesStyle}" Height="27"/>
-            <Label Grid.Row="0" Grid.Column="1" Content="Тип посещения" 
+               Style="{StaticResource LablesStyle}" Height="27" Grid.ColumnSpan="2"/>
+            <Label Grid.Row="0" Grid.Column="2" Content="Тип приёма" 
                Style="{StaticResource LablesStyle}" Height="27"/>
             <Label Grid.Row="3" Content="Диагноз" FontSize="16" 
-               Style="{StaticResource LablesStyle}" Height="27"/>
-
-            <TextBox Grid.Column="1" Grid.Row="1" TextWrapping="NoWrap" Text="Первичный"
+               Style="{StaticResource LablesStyle}" Height="27" Grid.ColumnSpan="2"/>
+            <DatePicker Grid.Row="1" Name="datePicker1" IsDropDownOpen="False" SelectedDateFormat="Short" 
+                        VerticalContentAlignment="Center" FontSize="16" SelectedDate="{Binding Date, Mode=TwoWay}"/>
+            <TextBox Grid.Column="2" Grid.Row="1" TextWrapping="NoWrap" Text="{Binding Type, Mode=TwoWay}"
                      VerticalContentAlignment="Top" FontSize="16" MaxLength="15"/>
-            <TextBox HorizontalAlignment="Left" Grid.Row="4" Grid.ColumnSpan="2"
+            <TextBox HorizontalAlignment="Left" Grid.Row="4" Grid.ColumnSpan="3"
                      TextWrapping="Wrap" VerticalAlignment="Top" Height="137" Width="373"
                      FontSize="16" FontFamily="Arial" AcceptsReturn="True" AcceptsTab="True"
-                     SpellCheck.IsEnabled="True" Language="ru-ru"/>
-            <Calendar Grid.RowSpan="3" Height="39" VerticalAlignment="Bottom" Margin="0,0,0,4" />
+                     SpellCheck.IsEnabled="True" Language="ru-ru" Text="{Binding Diagnosis, Mode=TwoWay}"/>
 
         </Grid>
 
         <Button Content="Закрыть" Foreground="DodgerBlue" FontFamily="Lucida Sans Unicode" FontSize="14" 
-                HorizontalAlignment="Right" Margin="0,13,15,0" Grid.Row="2"
+                HorizontalAlignment="Right" Margin="0,13,15,0" Grid.Row="2" Click="Button_Click"
                 VerticalAlignment="Top" Width="75" Height="30" Style="{StaticResource MyButtonStyle}"/>
+        <Button Content="Сохранить" Foreground="Cyan" FontFamily="Lucida Sans Unicode" FontSize="14" 
+            HorizontalAlignment="Right" Margin="0,8,152,0" Grid.Row="2" Command="{Binding SaveRecCommand}" ToolTip="Сохранить запись"
+            VerticalAlignment="Top" Width="102" Height="35" Style="{StaticResource MyButtonStyle}" RenderTransformOrigin="0.498,0.544"/>
 
     </Grid>
 </Window>

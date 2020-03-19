@@ -17,20 +17,11 @@ namespace PatientСardWpfApp.Views
     /// <summary>
     /// Логика взаимодействия для PatientVisitsHistoryView.xaml
     /// </summary>
-    public partial class PatientVisitsHistoryView : Window
+    public partial class VisitsHistoryView : Window
     {
-        public PatientVisitsHistoryView()
+        public VisitsHistoryView()
         {
             InitializeComponent();
-        }
-
-        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                DragMove();
-            }
-            catch { }
         }
 
         private void DataGridRow_LostFocus(object sender, RoutedEventArgs e)

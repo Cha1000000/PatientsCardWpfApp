@@ -9,7 +9,7 @@ namespace PatientСardWpfApp.Reposetory
     {
         public Visit NewVisitRecord(int patientID, DateTime date, string type, string diag)
         {
-            return new Visit { pid = patientID, _date = date, _type = type, _diagnosis = diag };
+            return new Visit { PatientId = patientID, Date = date, Type = type, Diagnosis = diag };
         }
 
         public void AddToHistory(ref ObservableCollection<Visit> visitsHistory, Visit record)

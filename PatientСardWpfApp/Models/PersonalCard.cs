@@ -17,9 +17,6 @@ namespace PatientСardWpfApp.Models
         DateTime _birthday;
         string _adress;
         string _phone;
-        List<Visit> visitsHistory;
-
-        Visit pVisit;
 
         #region Properties
         public int Id
@@ -56,6 +53,8 @@ namespace PatientСardWpfApp.Models
         }
 
         [Display(Name = "Пол")]
+        [Required(ErrorMessage = "Не верный формат. Пример: \"Муж.\", \"Жен.\".")]
+        [StringLength(4)]
         public string Sex
         {
             get { return _sex; }
@@ -64,11 +63,16 @@ namespace PatientСardWpfApp.Models
 
         [Display(Name = "Дата рождения")]
         [DataType(DataType.DateTime)]
-        [StringLength(10)]
+        /*[StringLength(10)]
         public string Birthday
         {
             get { return _birthday.ToString("dd.MM.yyyy"); }
             set { SetProperty(ref _birthday, DateTime.ParseExact(value, "dd.MM.yyyy", CultureInfo.InvariantCulture)); }
+        }*/
+        public DateTime Birthday
+        {
+            get { return _birthday; }
+            set { SetProperty(ref _birthday, value); }
         }
 
         [Display(Name = "Адрес")]
@@ -90,22 +94,10 @@ namespace PatientСardWpfApp.Models
             set { SetProperty(ref _phone, value); }
         }
 
-        [Display(Name = "Последнее посещение")]
-        [DataType(DataType.DateTime)]
-        [StringLength(10)]
-        public string LastVisit
-        {
-            get { return pVisit?._date.ToString("dd.MM.yyyy"); }
-        }
-
-        public List<Visit> VisitsHistory {
-            get { return visitsHistory; }
-            set { SetProperty(ref visitsHistory, value); }
-        }
         #endregion
 
         public PersonalCard() {  }
-        public PersonalCard(int id, string surname, string name, string patronymic, string sex, string birthday, string phone, string adress, Visit visit)
+        public PersonalCard(int id, string surname, string name, string patronymic, string sex, DateTime birthday, string phone, string adress)
         {
             Id = id;
             Name = name;
@@ -115,8 +107,6 @@ namespace PatientСardWpfApp.Models
             Birthday = birthday;
             Adress = adress;
             Phone = phone;
-
-            pVisit = visit;
         }
     }
 }

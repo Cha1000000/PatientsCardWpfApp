@@ -3,6 +3,11 @@ using PatientСardWpfApp.Interfaces;
 using Prism.Mvvm;
 using System.Windows;
 using System.ComponentModel;
+using System.Windows.Input;
+using PatientСardWpfApp.Views;
+using Prism.Commands;
+using System.Collections.ObjectModel;
+using PatientСardWpfApp.Reposetory;
 
 namespace PatientСardWpfApp.ViewModels
 {
@@ -20,6 +25,8 @@ namespace PatientСardWpfApp.ViewModels
 
         private Visit visit;
         private Visit _selectedRecord;
+        private PersonalCard _patientCard;
+        #region Public Properties
         public Visit Visit
         {
             get { return visit; }
@@ -38,22 +45,45 @@ namespace PatientСardWpfApp.ViewModels
             set { SetProperty(ref _btVisible, value); }
         }
 
-        public BindingList<Visit> PatientVisitsHistory = new BindingList<Visit>();
+        public ObservableCollection<Visit> PatientVisitsHistory = new ObservableCollection<Visit>();
 
-        public IVisitsAdder Adder { get; set; }
+        public IVisitsAdder Adder { get; set; } = new VisitAdd();
         public IVisitRemover Remover { get; set; }
 
+        public ICommand AddNewRecordCommand { get; private set; }
+        public ICommand RemoveRecordCommand { get; private set; }
+        public ICommand EditRecordCommand { get; private set; }
+        #endregion
+
+        //----------------------------------------------------------------------------------------------
         public VisitsHistoryVM(PersonalCard Patient)
         {
             if (Patient != null)
             {
+                _patientCard = Patient;
                 string FullName = string.Join(" ", Patient.Surname, Patient.Name, Patient.Patronymic);
                 DisplayName += $": {FullName}";
             }
 
-            //Загрузить данные из БД, соответственно id пациента, в PatientVisitsHistory
+            AddNewRecordCommand = new DelegateCommand(MakeRecord);
+
+            UpdateFromDB();
         }
 
+        private void UpdateFromDB()
+        {// Обновление информации в PatientVisitsHistory из БД
 
+        }
+
+        private void MakeRecord()
+        {// Переход в редактор записей посещения
+            if (_patientCard != null)
+            {
+                var VE = new VisitEditView();
+                VE.DataContext = new VisitEditorVM(_patientCard);
+                VE.ShowDialog();
+                //Обновить PatientVisitsHistory из БД
+            }
+        }
     }
 }

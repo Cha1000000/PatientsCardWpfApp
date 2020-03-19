@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
 using System.Globalization;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using PatientСardWpfApp.Models;
@@ -11,7 +14,7 @@ using Prism.Mvvm;
 
 namespace PatientСardWpfApp.ViewModels
 {
-    class MainWindowVM : BindableBase
+    class ShellViewModel : BindableBase
     {
         #region property DisplayName
         /// <summary>
@@ -33,16 +36,13 @@ namespace PatientСardWpfApp.ViewModels
         private PersonalCard card;
         private PersonalCard _selectedPatient;
         private Visit visit;
+        private string _stateInfo;
+
+        #region Public Properties
         public PersonalCard Card
         {
             get { return card; }
             set { SetProperty(ref card, value); }
-        }
-
-        public Visit pVisit
-        {
-            get { return visit; }
-            set { SetProperty(ref visit, value); }
         }
 
         public PersonalCard SelectedPatient
@@ -55,6 +55,18 @@ namespace PatientСardWpfApp.ViewModels
             }
         }
 
+        public Visit pVisit
+        {
+            get { return visit; }
+            set { SetProperty(ref visit, value); }
+        }
+        
+        public string StateInfo
+        {
+            get { return _stateInfo; }
+            set { SetProperty(ref _stateInfo, value); }
+        }
+
         private Visibility _btVisible = Visibility.Hidden;
         public Visibility BtVisibility
         {
@@ -62,31 +74,47 @@ namespace PatientСardWpfApp.ViewModels
             set { SetProperty(ref _btVisible, value); }
         }
 
-        public static ObservableCollection<string> SexTypes { get; private set; } = new ObservableCollection<string>() { "Муж.", "Жен." };
-        public ObservableCollection<PersonalCard> Patients { get; private set; }
+        public static BindingList<string> SexTypes { get; private set; } = new BindingList<string>() { "Муж.", "Жен." };
+        public BindingList<PersonalCard> Patients { get; private set; }
 
         public ICommand NewPatientProfile { get; private set; }
         public ICommand ProfileRemove { get; private set; }
         public ICommand OpenProfile { get; private set; }
         public ICommand VisitsHistoryShow { get; private set; }
-        //public DelegateCommand<object> VisitsHistoryShow { get; }
 
-        public MainWindowVM()
+        #endregion
+
+        public ShellViewModel()
         {
-            Patients = new ObservableCollection<PersonalCard>();
-
-            pVisit = new Visit(1, DateTime.Now, "Первичный", "Хронический бронхит");
-            Card = new PersonalCard(1, "Иванов", "Иван", "Иванович", SexTypes[0], "15.03.1989", "+79191331239", "Курск, ул. Домосторителей, 1", pVisit);
-            Patients.Add(Card);
+            Patients = new BindingList<PersonalCard>();
 
             VisitsHistoryShow = new DelegateCommand(ShowVisitsHistoryView);
+            NewPatientProfile = new DelegateCommand(NewProfile);
+
+            using (AppDBContent context = new AppDBContent())
+            {
+                context.PersonalCards.Load();
+                var temp = context.PersonalCards.Local.ToBindingList();
+                Patients = temp;
+            }
+            //pVisit = new Visit(1, DateTime.Now, "Первичный", "Хронический бронхит");
+            //Card = new PersonalCard(1, "Иванов", "Иван", "Иванович", SexTypes[0], "15.03.1989", "+79191331239", "Курск, ул. Домосторителей, 1");
+            //Patients.Add(Card);            
+        }
+
+
+        private void NewProfile()
+        {
+            var ProfileWin = new ProfileView();
+            ProfileWin.DataContext = new ProfileViewModel(null);
+            ProfileWin.ShowDialog();
         }
 
         private void ShowVisitsHistoryView()
         {
             if (SelectedPatient != null)
             {
-                var PHView = new PatientVisitsHistoryView();
+                var PHView = new VisitsHistoryView();
                 PHView.DataContext = new VisitsHistoryVM(SelectedPatient);                
                 PHView.ShowDialog();
             }

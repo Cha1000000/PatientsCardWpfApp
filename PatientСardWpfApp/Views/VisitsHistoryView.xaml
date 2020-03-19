@@ -1,13 +1,13 @@
-﻿<Window x:Class="PatientСardWpfApp.Views.PatientVisitsHistoryView"
+﻿<Window x:Class="PatientСardWpfApp.Views.VisitsHistoryView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PatientСardWpfApp.Views"
         mc:Ignorable="d"
-        Title="{Binding DisplayName}" Height="400" Width="560" Background="#F2121B30"
-        WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="CanResizeWithGrip"
-        Opacity="0.99" AllowsTransparency="True" MouseDown="Window_MouseDown">
+        Title="{Binding DisplayName}" Height="400" Width="560" 
+        MinHeight="300" MinWidth="400" WindowStartupLocation="CenterScreen"
+        Style="{StaticResource WindowsSimpleStyle}">
 
     <Window.Resources>
         <Image x:Key="ImageAdd" Source="/img/plus.png"/>
@@ -57,6 +57,7 @@
             </Setter>
         </Style>
     </Window.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="139*"/>
@@ -95,15 +96,15 @@
 
             <Button x:Name="btAddNewPatient" Grid.Row="1" Style="{StaticResource MyButtonStyle}" 
                     Content="{StaticResource ImageAdd}" ToolTip="Добавить запись"
-                    Command="{Binding AddNewRecord}"/>
+                    Command="{Binding AddNewRecordCommand}"/>
 
             <Button x:Name="btDeletePatient" Grid.Row="3" Style="{StaticResource MyButtonStyle}"
                     Content="{StaticResource ImageDel}" ToolTip="Удалить запись"
-                    Visibility="{Binding BtVisibility}" Command="{Binding RemoveRecord}"/>
+                    Visibility="{Binding BtVisibility}" Command="{Binding RemoveRecordCommand}"/>
 
             <Button x:Name="btProfileEdit"   Grid.Row="5" Style="{StaticResource MyButtonStyle}"
                     Content="{StaticResource ImageEdit}" ToolTip="Редактировать запись"
-                    Visibility="{Binding BtVisibility}" Command="{Binding EditRecord}"/>
+                    Visibility="{Binding BtVisibility}" Command="{Binding EditRecordCommand}"/>
 
             <Button x:Name="btExit" Grid.Row="7" Style="{StaticResource MyButtonStyle}"
                     Content="{StaticResource ImageExit}" ToolTip="Закрыть окно" Click="btExit_Click"/>
