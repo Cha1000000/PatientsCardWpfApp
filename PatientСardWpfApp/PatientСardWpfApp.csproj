@@ -141,6 +141,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Interfaces\IValidator.cs" />
     <Compile Include="Migrations\202003191620171_InitialCreate.cs" />
     <Compile Include="Migrations\202003191620171_InitialCreate.designer.cs">
       <DependentUpon>202003191620171_InitialCreate.cs</DependentUpon>
@@ -162,6 +163,7 @@
     <Compile Include="MyTheme.xaml.cs">
       <DependentUpon>MyTheme.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Reposetory\DataValidate.cs" />
     <Compile Include="ViewModels\ProfileViewModel.cs" />
     <Compile Include="ViewModels\VisitEditorVM.cs" />
     <Compile Include="Views\ProfileView.xaml.cs">

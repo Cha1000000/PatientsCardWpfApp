@@ -12,11 +12,6 @@ namespace PatientСardWpfApp.Views
             DataContext = new ShellViewModel();            
         }
 
-        private void DataGridRow_Unselected(object sender, RoutedEventArgs e)
-        {
-            //dgPatients.UnselectAll();
-        }
-
         private void btExit_Click(object sender, RoutedEventArgs e)
         {
             Close();

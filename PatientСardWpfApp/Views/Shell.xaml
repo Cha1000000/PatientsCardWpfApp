@@ -26,8 +26,6 @@
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontWeight" Value="Medium"/>
             <Setter Property="FontFamily" Value="Tahoma"/>
-
-            <EventSetter Event="Unselected" Handler="DataGridRow_Unselected"/>
         </Style>
 
         <Style x:Key="MyButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource AccentedSquareButtonStyle}">
@@ -85,19 +83,25 @@
 
             <!-- Таблица пациентов -->
             <DataGrid x:Name="dgPatients" Grid.Column="0" Grid.Row="1"
-                      IsReadOnly="True" CanUserAddRows="True"
-                      ItemsSource="{Binding Patients, UpdateSourceTrigger=PropertyChanged}" CanUserDeleteRows="True"
-                      SelectedItem="{Binding SelectedPatient}" Style="{StaticResource AzureDataGrid}"
-                      AutoGenerateColumns="False"  
-                      FontSize="12" FontWeight="Bold" RowStyle="{StaticResource PatientsRowStyle}">
-
-                <DataGrid.ContextMenu>
-                    <ContextMenu ItemsSource="{Binding SelectedPatient}">
-                        <MenuItem Header="Открыть карточку пациента" Command="{Binding OpenProfile}"/>
-                        <MenuItem Header="Удалить запись пациента" Command="{Binding ProfileRemove}"/>
-                        <MenuItem Header="Показать историю посещений" Command="{Binding VisitsHistoryShow}"/>
+                      IsReadOnly="True" DataContext="{Binding }"
+                      ItemsSource="{Binding Patients}"
+                      SelectedItem="{Binding SelectedPatient}" 
+                      Style="{StaticResource AzureDataGrid}"
+                      AutoGenerateColumns="False" FontSize="12" FontWeight="Bold">
+                <DataGrid.Resources>
+                    <ContextMenu x:Key="gridContextMenu">
+                        <ContextMenu.Items>
+                            <MenuItem Header="Открыть карточку пациента" Command="{Binding DataContext.OpenProfile, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"/>
+                            <MenuItem Header="Удалить запись пациента" Command="{Binding DataContext.ProfileRemove, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"/>
+                            <MenuItem Header="Показать историю посещений" Command="{Binding DataContext.VisitsHistoryShow, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"/>
+                        </ContextMenu.Items>
                     </ContextMenu>
-                </DataGrid.ContextMenu>
+                </DataGrid.Resources>
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow" BasedOn="{StaticResource PatientsRowStyle}">
+                        <Setter Property="ContextMenu" Value="{StaticResource gridContextMenu}" />
+                    </Style>
+                </DataGrid.RowStyle>
 
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseDoubleClick">
