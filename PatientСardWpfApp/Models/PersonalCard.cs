@@ -87,7 +87,7 @@ namespace PatientСardWpfApp.Models
         [Display(Name = "Номер телефона")]
         [DataType(DataType.PhoneNumber)]
         [StringLength(16)]
-        [RegularExpression(@"^\+[1-9]\d{3}-\d{3}-\d{4}$", ErrorMessage = "Номер телефона должен иметь формат +xxxx-xxx-xx-xx")]
+        [RegularExpression(@"^\+[1-9]\d{3}-\d{3}-\d{2}-\d{2}$", ErrorMessage = "Номер телефона должен иметь формат +xxxx-xxx-xx-xx")]
         [Required(AllowEmptyStrings =true)]
         public string Phone
         {

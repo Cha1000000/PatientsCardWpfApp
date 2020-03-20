@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PatientСardWpfApp.Models
 {
-    class AppDBContent : DbContext
+    public class AppDBContent : DbContext
     {
         public AppDBContent(): base("DefaultConnection")
         {

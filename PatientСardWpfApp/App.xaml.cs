@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using PatientСardWpfApp.Models;
+using System.Windows;
 
 namespace PatientСardWpfApp
 {
@@ -15,6 +16,12 @@ namespace PatientСardWpfApp
             bootstapper.Run();
         }
 
+        protected override void OnExit(ExitEventArgs e)
+        {
+            base.OnExit(e);
+            dBContent.Dispose();
+        }
 
+        public static AppDBContent dBContent = new AppDBContent();
     }
 }

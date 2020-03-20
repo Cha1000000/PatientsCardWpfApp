@@ -111,11 +111,11 @@
         <TextBox Grid.Row="14" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding Path=Adress, Mode=TwoWay}"
                  TextWrapping="Wrap" VerticalContentAlignment="Top"/>
 
-        <Button Grid.Row="16" Grid.Column="1"
+        <Button Grid.Row="16" Grid.Column="1" IsCancel="True"
                 Content="Отмена" Foreground="DodgerBlue" FontFamily="Verdana" FontSize="16" 
                 HorizontalAlignment="Stretch" Margin="14,2" Click="Button_Click"
                 VerticalAlignment="Stretch" Style="{StaticResource MyButtonStyle}"/>
-        <Button Grid.Row="16" Grid.Column="3"
+        <Button Grid.Row="16" Grid.Column="3" IsDefault="True"
                 Content="ЗАПИСАТЬ" Foreground="DodgerBlue" FontFamily="Verdana" FontSize="16" 
                 HorizontalAlignment="Stretch" Margin="16,2" Command="{Binding SaveRecordCommand}"
                 VerticalAlignment="Stretch" Style="{StaticResource MyButtonStyle}"/>

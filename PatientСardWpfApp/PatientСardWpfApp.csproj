@@ -141,7 +141,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Interfaces\IContentUpdater.cs" />
     <Compile Include="Migrations\202003191620171_InitialCreate.cs" />
     <Compile Include="Migrations\202003191620171_InitialCreate.designer.cs">
       <DependentUpon>202003191620171_InitialCreate.cs</DependentUpon>
@@ -163,8 +162,6 @@
     <Compile Include="MyTheme.xaml.cs">
       <DependentUpon>MyTheme.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Reposetory\VisitsHistoryUpdate.cs" />
-    <Compile Include="Reposetory\PatientListUpdate.cs" />
     <Compile Include="ViewModels\ProfileViewModel.cs" />
     <Compile Include="ViewModels\VisitEditorVM.cs" />
     <Compile Include="Views\ProfileView.xaml.cs">
@@ -302,6 +299,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DB\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
-using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using PatientСardWpfApp.Interfaces;
 using PatientСardWpfApp.Models;
-using PatientСardWpfApp.Reposetory;
 using PatientСardWpfApp.Views;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -84,7 +80,6 @@ namespace PatientСardWpfApp.ViewModels
         public ICommand OpenProfile { get; private set; }
         public ICommand VisitsHistoryShow { get; private set; }
 
-        public static IContentUpdater Updater = new PatientListUpdate();
         #endregion
 
         public ShellViewModel()
@@ -93,16 +88,53 @@ namespace PatientСardWpfApp.ViewModels
 
             VisitsHistoryShow = new DelegateCommand(ShowVisitsHistoryView);
             NewPatientProfile = new DelegateCommand(NewProfile);
+            ProfileRemove = new DelegateCommand(RemoveProfile);
+            OpenProfile = new DelegateCommand(EditProfile);
 
-            Patients = (BindingList<PersonalCard>)Updater.Update();           
+            App.dBContent.PersonalCards.Load();
+            Patients = App.dBContent.PersonalCards.Local.ToBindingList();
         }
 
         private void NewProfile()
         {
-            var ProfileWin = new ProfileView();
-            ProfileWin.DataContext = new ProfileViewModel(null);
+            var vm = new ProfileViewModel(null);
+            var ProfileWin = new ProfileView
+            {
+                DataContext = vm
+            };
+            vm.OnRequestClose += (s, e) => ProfileWin.Close();
             ProfileWin.ShowDialog();
-            Patients = (BindingList<PersonalCard>)Updater.Update();
+        }
+
+        private void EditProfile()
+        {
+            if (_selectedPatient != null)
+            {
+                var vm = new ProfileViewModel(SelectedPatient, true);
+                var ProfileWin = new ProfileView
+                {
+                    DataContext = vm
+                };
+                vm.OnRequestClose += (s, e) => ProfileWin.Close();
+                ProfileWin.ShowDialog();
+            }
+        }
+
+        private void RemoveProfile()
+        {
+            if (MessageBox.Show("Удалить запись выбранного пациента?",
+                                "Подтвердите действие",
+                                MessageBoxButton.YesNo,
+                                MessageBoxImage.Question) == MessageBoxResult.Yes)
+                if (SelectedPatient != null)
+                {
+                    List<PersonalCard> temp = App.dBContent.PersonalCards.ToList();
+                    var selecteditem = from t in App.dBContent.PersonalCards
+                                       where SelectedPatient.Id == t.Id
+                                       select t;
+                    App.dBContent.PersonalCards.Remove(selecteditem.FirstOrDefault());
+                    App.dBContent.SaveChanges();
+                }
         }
 
         private void ShowVisitsHistoryView()
@@ -114,8 +146,9 @@ namespace PatientСardWpfApp.ViewModels
                 PHView.ShowDialog();
             }
             else
-                throw new Exception("Невозможно отобразить данные. Укажите пациента из списка и повторите попытку.");
+                return;
+                //throw new Exception("Невозможно отобразить данные. Укажите пациента из списка и повторите попытку.");
         }
-
+        
     }
 }

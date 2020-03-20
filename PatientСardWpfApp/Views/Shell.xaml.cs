@@ -14,12 +14,13 @@ namespace PatientСardWpfApp.Views
 
         private void DataGridRow_Unselected(object sender, RoutedEventArgs e)
         {
-            dgPatients.UnselectAll();
+            //dgPatients.UnselectAll();
         }
 
         private void btExit_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
+        
     }
 }

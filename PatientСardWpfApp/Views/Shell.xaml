@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:vm="clr-namespace:PatientСardWpfApp.ViewModels"
         mc:Ignorable="d"
@@ -84,27 +85,32 @@
 
             <!-- Таблица пациентов -->
             <DataGrid x:Name="dgPatients" Grid.Column="0" Grid.Row="1"
-                      IsReadOnly="True"
-                      ItemsSource="{Binding Path=Patients}" 
-                      SelectedItem="{Binding Path=SelectedPatient, Mode=TwoWay}" Style="{StaticResource AzureDataGrid}"
-                      AutoGenerateColumns="False" FontSize="12" FontWeight="Bold" RowStyle="{StaticResource PatientsRowStyle}"
-                      Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType=DataGridRow}}">
+                      IsReadOnly="True" CanUserAddRows="True"
+                      ItemsSource="{Binding Patients, UpdateSourceTrigger=PropertyChanged}" CanUserDeleteRows="True"
+                      SelectedItem="{Binding SelectedPatient}" Style="{StaticResource AzureDataGrid}"
+                      AutoGenerateColumns="False"  
+                      FontSize="12" FontWeight="Bold" RowStyle="{StaticResource PatientsRowStyle}">
 
                 <DataGrid.ContextMenu>
-                    <ContextMenu DataContext="{Binding PlacementTarget.Tag}">
+                    <ContextMenu ItemsSource="{Binding SelectedPatient}">
                         <MenuItem Header="Открыть карточку пациента" Command="{Binding OpenProfile}"/>
                         <MenuItem Header="Удалить запись пациента" Command="{Binding ProfileRemove}"/>
                         <MenuItem Header="Показать историю посещений" Command="{Binding VisitsHistoryShow}"/>
                     </ContextMenu>
                 </DataGrid.ContextMenu>
 
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDoubleClick">
+                        <i:InvokeCommandAction
+                            Command="{Binding OpenProfile}"
+                            CommandParameter="{Binding SelectedPatient}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Фамилия" Binding="{Binding Path=Surname}" Width="50*"/>
                     <DataGridTextColumn Header="Имя" Binding="{Binding Path=Name}" Width="40*"/>
                     <DataGridTextColumn Header="Отчество" Binding="{Binding Path=Patronymic}" Width="40*"/>
-                    <!--<DataGridComboBoxColumn Header="Пол"  
-                                            ItemsSource="{Binding Source={x:Static vm:ShellViewModel.SexTypes}}" 
-                                            SelectedValueBinding="{Binding Path=Sex}" Width="22*"/>-->
                     <DataGridTextColumn Header="Пол" Binding="{Binding Path=Sex}" Width="22*"/>
                     <DataGridTextColumn Header="Дата рождения" Binding="{Binding Path=Birthday}" Width="37*"/>
                     <DataGridTextColumn Header="Адрес" Binding="{Binding Path=Adress}" Width="75*"/>
@@ -134,16 +140,16 @@
 
             <Button x:Name="btDeletePatient" Grid.Row="3" Style="{StaticResource MyButtonStyle}"
                     Content="{StaticResource ImageDelProfile}" ToolTip="Удалить данные выбранного пациента"
-                    Visibility="{Binding BtVisibility}" Command="{Binding ProfileRemove}"/>
+                    Visibility="{Binding BtVisibility}" Command="{Binding ProfileRemove}" CommandParameter="{Binding SelectedPatient}"/>
 
             <Button x:Name="btProfileEdit" Grid.Row="5" Style="{StaticResource MyButtonStyle}"
                     Content="{StaticResource ImageEditProfile}" ToolTip="Просмотреть/Редактировать данные пациента"
-                    Visibility="{Binding BtVisibility}" Command="{Binding OpenProfile}"/>
+                    Visibility="{Binding BtVisibility}" Command="{Binding OpenProfile}" CommandParameter="{Binding SelectedPatient}"/>
 
             <Button x:Name="btVisitsShow" Grid.Row="7" Style="{StaticResource MyButtonStyle}"
                     Content="{StaticResource ImageLastVisit}" ToolTip="Показать историю посещений"
-                    Visibility="{Binding BtVisibility}" Command="{Binding Path=VisitsHistoryShow}"/>
-            
+                    Visibility="{Binding BtVisibility}" Command="{Binding VisitsHistoryShow}" CommandParameter="{Binding SelectedPatient}"/>
+
             <Button x:Name="btExit" Grid.Row="9" Style="{StaticResource MyButtonStyle}"
                     Content="{StaticResource ImageExit}" ToolTip="Выход из приложения" Click="btExit_Click"/>
         </Grid>

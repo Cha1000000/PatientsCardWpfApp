@@ -32,5 +32,6 @@ namespace PatientСardWpfApp.Views
                                 MessageBoxImage.Question) == MessageBoxResult.Yes)
                 Close();
         }
+
     }
 }
