@@ -17,6 +17,7 @@ namespace PatientСardWpfApp.ViewModels
         private bool IsEdit { get; set; }
 
         #region Public Properties
+
         private PersonalCard _patient;
         public PersonalCard Patient
         {
@@ -24,7 +25,7 @@ namespace PatientСardWpfApp.ViewModels
             set { SetProperty(ref _patient, value); }
         }
 
-
+        /*
         private string _sur;
         public string Surname
         {
@@ -106,7 +107,7 @@ namespace PatientСardWpfApp.ViewModels
                 SetProperty(ref _adress, value);
             }
         }
-
+        */
         #endregion
 
         #region Сохранить запись
@@ -173,7 +174,14 @@ namespace PatientСardWpfApp.ViewModels
                 var p = App.dBContent.PersonalCards.Find(Patient.Id);
                 if (p != null)
                 {
-                    App.dBContent.Entry(Patient).State = EntityState.Modified;
+                    p.Name = Patient.Name;
+                    p.Surname = Patient.Surname;
+                    p.Patronymic = Patient.Patronymic;
+                    p.Sex = Patient.Sex;
+                    p.Birthday = Patient.Birthday;
+                    p.Phone = Patient.Phone;
+                    p.Adress = Patient.Adress;
+                    App.dBContent.Entry(p).State = EntityState.Modified;
                     App.dBContent.SaveChanges();
                 }
             }
@@ -186,8 +194,19 @@ namespace PatientСardWpfApp.ViewModels
 
         public ProfileViewModel(PersonalCard patientData, bool isEdit = false)
         {
-            Patient = patientData ?? new PersonalCard();
             IsEdit = isEdit;
+            Patient = new PersonalCard()
+            {
+                Id = patientData.Id,
+                Name = patientData.Name,
+                Surname = patientData.Surname,
+                Patronymic = patientData.Patronymic,
+                Sex = patientData.Sex,
+                Birthday = patientData.Birthday,
+                Phone = patientData.Phone,
+                Adress = patientData.Adress
+            } ?? new PersonalCard();
+
         }
 
     }

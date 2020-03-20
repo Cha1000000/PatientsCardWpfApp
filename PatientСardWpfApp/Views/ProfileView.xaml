@@ -101,14 +101,14 @@
         <Label Grid.Row="12" Grid.Column="1" Style="{StaticResource LabelStyle}" Content="Телефон"/>
         <Label Grid.Row="14" Grid.Column="1" Style="{StaticResource LabelStyle}" Content="Адрес" VerticalContentAlignment="Top"/>
 
-        <TextBox Grid.Row="2" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding Path=Surname, Mode=TwoWay}"/>
-        <TextBox Grid.Row="4" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding Path=Name, Mode=TwoWay}"/>
-        <TextBox Grid.Row="6" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding Path=Patronymic, Mode=TwoWay}"/>
+        <TextBox Grid.Row="2" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding Path=Patient.Surname, Mode=TwoWay}"/>
+        <TextBox Grid.Row="4" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding Path=Patient.Name, Mode=TwoWay}"/>
+        <TextBox Grid.Row="6" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding Path=Patient.Patronymic, Mode=TwoWay}"/>
         <ComboBox Grid.Row="8" Grid.Column="3" FontSize="18" FontFamily="Verdana" VerticalContentAlignment="Center"
-                  ItemsSource="{Binding Source={x:Static vm:ShellViewModel.SexTypes}}" SelectedValue="{Binding Path=Sex, Mode=TwoWay}"/>
-        <DatePicker Grid.Row="10" Grid.Column="3" FontSize="18" VerticalContentAlignment="Center" SelectedDate="{Binding Path=Birthday, Mode=TwoWay}"/>
-        <TextBox Grid.Row="12" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding Path=Phone, Mode=TwoWay}"/>
-        <TextBox Grid.Row="14" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding Path=Adress, Mode=TwoWay}"
+                  ItemsSource="{Binding Source={x:Static vm:ShellViewModel.SexTypes}}" SelectedValue="{Binding Path=Patient.Sex, Mode=TwoWay}"/>
+        <DatePicker Grid.Row="10" Grid.Column="3" FontSize="18" VerticalContentAlignment="Center" SelectedDate="{Binding Path=Patient.Birthday, Mode=TwoWay}"/>
+        <TextBox Grid.Row="12" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding Path=Patient.Phone, Mode=TwoWay}"/>
+        <TextBox Grid.Row="14" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding Path=Patient.Adress, Mode=TwoWay}"
                  TextWrapping="Wrap" VerticalContentAlignment="Top"/>
 
         <Button Grid.Row="16" Grid.Column="1" IsCancel="True"

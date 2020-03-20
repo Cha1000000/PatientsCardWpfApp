@@ -190,8 +190,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Interfaces\IPatientAdder.cs" />
-    <Compile Include="Interfaces\IPatientRemover.cs" />
     <Compile Include="Interfaces\IVisitRemover.cs" />
     <Compile Include="Interfaces\IVisitsAdder.cs" />
     <Compile Include="Models\PersonalCard.cs" />
