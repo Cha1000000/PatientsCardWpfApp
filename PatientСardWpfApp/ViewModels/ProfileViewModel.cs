@@ -95,6 +95,7 @@ namespace PatientСardWpfApp.ViewModels
         }
         #endregion
 
+        //-----------------------------------------------------------------------------
         public ProfileViewModel(PersonalCard patientData, bool isEdit = false)
         {            
             if (patientData != null)

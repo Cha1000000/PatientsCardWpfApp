@@ -32,6 +32,7 @@ namespace PatientСardWpfApp
             RegisterTypeIfMissing(typeof(IVisitsAdder), typeof(VisitAdd), true);
             RegisterTypeIfMissing(typeof(IVisitRemover), typeof(VisitRemove), true);
             RegisterTypeIfMissing(typeof(IValidator), typeof(DataValidate), true);
+            RegisterTypeIfMissing(typeof(IDBLoader), typeof(DBDownload), true);
 
             /*Container.RegisterInstance<CallbackLogger>(this.callbackLogger);*/
         }

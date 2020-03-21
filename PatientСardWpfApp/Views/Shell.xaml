@@ -20,8 +20,6 @@
         <Image x:Key="ImageExit"  Source="/img/Exit_90x90.png"/>
 
         <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource AzureDataGridRow}" x:Key="PatientsRowStyle">
-            <!--<Setter Property="Foreground" Value="#FFB3B3B3"/>-->
-            <!--<Setter Property="Height" Value="25"/>-->
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontWeight" Value="Medium"/>

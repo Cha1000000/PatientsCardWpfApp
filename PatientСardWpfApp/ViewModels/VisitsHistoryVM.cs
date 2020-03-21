@@ -8,6 +8,10 @@ using PatientСardWpfApp.Views;
 using Prism.Commands;
 using System.Collections.ObjectModel;
 using PatientСardWpfApp.Reposetory;
+using System.Data.Entity;
+using System.Linq;
+using System.Collections.Generic;
+using System;
 
 namespace PatientСardWpfApp.ViewModels
 {
@@ -23,19 +27,16 @@ namespace PatientСardWpfApp.ViewModels
         }
         #endregion
 
-        private Visit visit;
         private Visit _selectedRecord;
         private PersonalCard _patientCard;
+
         #region Public Properties
-        public Visit Visit
-        {
-            get { return visit; }
-            set { SetProperty(ref visit, value); }
-        }
-         public Visit SelectedRecord
+        public Visit SelectedRecord
         {
             get { return _selectedRecord; }
-            set { SetProperty(ref _selectedRecord, value); }
+            set { SetProperty(ref _selectedRecord, value);
+                  BtVisibility = (_selectedRecord != null) ? Visibility.Visible : Visibility.Hidden;
+            }
         }
 
         private Visibility _btVisible = Visibility.Hidden;
@@ -45,16 +46,15 @@ namespace PatientСardWpfApp.ViewModels
             set { SetProperty(ref _btVisible, value); }
         }
 
-        public ObservableCollection<Visit> PatientVisitsHistory = new ObservableCollection<Visit>();
+        public static BindingList<Visit> PatientVisitsHistory { get; set; }
 
-        public IVisitsAdder Adder { get; set; } = new VisitAdd();
-        public IVisitRemover Remover { get; set; }
+        IVisitRemover Remover { get; set; } = new VisitRemove();
+        IDBLoader DBLoader { get; set; } = new DBDownload();
 
         public ICommand AddNewRecordCommand { get; private set; }
         public ICommand RemoveRecordCommand { get; private set; }
         public ICommand EditRecordCommand { get; private set; }
         #endregion
-
         //----------------------------------------------------------------------------------------------
         public VisitsHistoryVM(PersonalCard Patient)
         {
@@ -66,24 +66,64 @@ namespace PatientСardWpfApp.ViewModels
             }
 
             AddNewRecordCommand = new DelegateCommand(MakeRecord);
+            RemoveRecordCommand = new DelegateCommand(RemoveRecord);
+            EditRecordCommand = new DelegateCommand(EditRecord);
 
-            UpdateFromDB();
+            HistoryListUpdate();
         }
 
-        private void UpdateFromDB()
-        {// Обновление информации в PatientVisitsHistory из БД
-
+        private void HistoryListUpdate()
+        {
+            App.dBContent.Visits.Load();
+            PatientVisitsHistory = new BindingList<Visit>(App.dBContent.Visits.Local.Where(x => x.PatientId.Equals(_patientCard.Id)).ToList());
         }
 
         private void MakeRecord()
-        {// Переход в редактор записей посещения
-            if (_patientCard != null)
+        {// Переход в редактор записей посещения:
+         // Добавление новой записи.            
+            SelectedRecord = new Visit(_patientCard.Id, DateTime.Now.Date, "", "");
+            var vm = new VisitEditorVM();
+            VisitEditorInit(vm);
+            if (vm.isOK)
             {
-                var VE = new VisitEditView();
-                VE.DataContext = new VisitEditorVM(_patientCard);
-                VE.ShowDialog();
-                //Обновить PatientVisitsHistory из БД
+                SelectedRecord = vm.curVisit;
+                PatientVisitsHistory.Add(SelectedRecord);
             }
+        }
+
+        private void EditRecord()
+        {// Переход в редактор записей посещения:
+         // Изменение записи.            
+            var vm = new VisitEditorVM(true);
+            VisitEditorInit(vm);
+        }
+
+        private void RemoveRecord()
+        {//Удаление записи
+            if (MessageBox.Show("Удалить выбранную запись?",
+                                "Подтвердите действие",
+                                MessageBoxButton.YesNo,
+                                MessageBoxImage.Question) == MessageBoxResult.Yes)
+            Remover.DeletRecord(SelectedRecord);
+            PatientVisitsHistory.Remove(SelectedRecord);
+        }
+
+        private void VisitEditorInit(VisitEditorVM vm)
+        {
+            vm.curVisit = new Visit()
+            {
+                Id = SelectedRecord.Id,
+                Date = SelectedRecord.Date,
+                Type = SelectedRecord.Type,
+                Diagnosis = SelectedRecord.Diagnosis,
+                PatientId = SelectedRecord.PatientId
+            };
+            var EditorWindow = new VisitEditView()
+            {
+                DataContext = vm
+            };
+            vm.OnRequestClose += (s, e) => EditorWindow.Close();
+            EditorWindow.ShowDialog();
         }
     }
 }

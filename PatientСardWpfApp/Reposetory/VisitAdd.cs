@@ -2,25 +2,55 @@
 using PatientСardWpfApp.Interfaces;
 using System;
 using System.Collections.ObjectModel;
+using System.Windows;
+using System.Data.Entity;
 
 namespace PatientСardWpfApp.Reposetory
 {
     public class VisitAdd : IVisitsAdder
     {
-        public Visit NewVisitRecord(int patientID, DateTime date, string type, string diag)
+        /// <summary>
+        /// Добавление новой записи о посещении в БД
+        /// </summary>
+        /// <param name="patientID">ID пациента</param>
+        /// <param name="visitData">Объект с данными записей посещения</param>
+        public void NewVisitRecord(Visit visitData)
         {
-            return new Visit { PatientId = patientID, Date = date, Type = type, Diagnosis = diag };
+            try
+            {
+                App.dBContent.Visits.Add(visitData);
+                App.dBContent.SaveChanges();
+            }
+            catch(Exception ex)
+            {
+                string errorText = $"Ошибка сохранения записи.\nПодробнее: {ex.ToString()}";
+                MessageBox.Show(errorText, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
-        public void AddToHistory(ref ObservableCollection<Visit> visitsHistory, Visit record)
+        /// <summary>
+        /// Обновление изменённой записи в БД
+        /// </summary>
+        /// <param name="visitData">Объект с данными записей посещения</param>
+        public void UpdateRecord(Visit visitData)
         {
-            if (record != null)
+            try
             {
-                visitsHistory.Add(record);
+                var dbRecord = App.dBContent.Visits.Find(visitData.Id);
+                if (dbRecord != null)
+                {                    
+                    dbRecord.Date = visitData.Date;
+                    dbRecord.Type = visitData.Type;
+                    dbRecord.Diagnosis = visitData.Diagnosis;
+                    
+                    App.dBContent.Entry(dbRecord).State = EntityState.Modified;
+                    App.dBContent.SaveChanges();
+                }
             }
-            else
+            catch(Exception ex)
             {
-                throw new Exception("Ошибка добавления новой записи. Данные записи отсутствуют.");
+                string errorText = $"Ошибка сохранения записи.\nПодробнее: {ex.ToString()}";
+                MessageBox.Show(errorText, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

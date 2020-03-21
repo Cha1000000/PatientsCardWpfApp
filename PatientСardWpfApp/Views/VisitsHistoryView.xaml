@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:local="clr-namespace:PatientСardWpfApp.Views"
         mc:Ignorable="d"
         Title="{Binding DisplayName}" Height="400" Width="560" 
@@ -21,7 +22,7 @@
             <Setter Property="FontWeight" Value="Medium"/>
             <Setter Property="FontFamily" Value="Tahoma"/>
             <Setter Property="Height" Value="Auto"/>
-            <EventSetter Event="LostFocus" Handler="DataGridRow_LostFocus"/>
+            <Setter Property="Padding" Value="4"/>
         </Style>
 
         <Style x:Key="MyButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource AccentedSquareButtonStyle}">
@@ -57,7 +58,7 @@
             </Setter>
         </Style>
     </Window.Resources>
-    
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="139*"/>
@@ -71,14 +72,37 @@
         <Label Grid.Row="0" Grid.ColumnSpan="2" Content="{Binding DisplayName}" 
                FontSize="14" FontWeight="Bold" Foreground="#7ac1ff" VerticalAlignment="Bottom"/>
 
-        <DataGrid x:Name="dgHistory" Grid.Row="1" IsReadOnly="True" RowStyle="{StaticResource TableRowStyle}"
+        <DataGrid x:Name="dgHistory" Grid.Row="1" IsReadOnly="True" HorizontalScrollBarVisibility="Visible"
                   AutoGenerateColumns="False" Margin="5" FontSize="12" FontWeight="Bold" Style="{StaticResource AzureDataGrid}"
-                  DataContext="{Binding}" 
-                  ItemsSource="{Binding PatientVisitsHistory}" SelectedItem="{Binding SelectedRecord, Mode=TwoWay}">
+                  DataContext="{Binding }" 
+                  ItemsSource="{Binding PatientVisitsHistory, Mode=TwoWay}" 
+                  SelectedItem="{Binding SelectedRecord, Mode=TwoWay}">
+            <DataGrid.Resources>
+                <ContextMenu x:Key="gridContextMenu">
+                    <ContextMenu.Items>
+                        <MenuItem Header="Открыть запись" Command="{Binding DataContext.EditRecordCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"/>
+                        <MenuItem Header="Удалить запись" Command="{Binding DataContext.RemoveRecordCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"/>
+                    </ContextMenu.Items>
+                </ContextMenu>
+
+            </DataGrid.Resources>
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow" BasedOn="{StaticResource TableRowStyle}">
+                    <Setter Property="ContextMenu" Value="{StaticResource gridContextMenu}" />
+                </Style>
+            </DataGrid.RowStyle>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction
+                            Command="{Binding EditRecordCommand}"
+                            CommandParameter="{Binding SelectedRecord}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+
             <DataGrid.Columns>
-                <DataGridTextColumn Header=" Дата" Binding="{Binding Path=Date}" Width="70"/>
-                <DataGridTextColumn Header="Тип посещения" Binding="{Binding Path=VisitType}" Width="135"/>
-                <DataGridTextColumn Header=" Диагноз" Binding="{Binding Path=Description}" Width="*"/>
+                <DataGridTextColumn Header=" Дата" Binding="{Binding Path=Date, StringFormat=\{0:dd.MM.yyyy\}, ConverterCulture=ru}" Width="25*"/>
+                <DataGridTextColumn Header=" Тип посещения" Binding="{Binding Path=Type}" Width="33*"/>
+                <DataGridTextColumn Header=" Диагноз" Binding="{Binding Path=Diagnosis}" Width="42*"/>
             </DataGrid.Columns>
         </DataGrid>
 

@@ -5,7 +5,9 @@ using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using PatientСardWpfApp.Interfaces;
 using PatientСardWpfApp.Models;
+using PatientСardWpfApp.Reposetory;
 using PatientСardWpfApp.Views;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -33,7 +35,6 @@ namespace PatientСardWpfApp.ViewModels
 
         private PersonalCard card;
         private PersonalCard _selectedPatient;
-        private Visit visit;
         private string _stateInfo;
 
         #region Public Properties
@@ -53,12 +54,6 @@ namespace PatientСardWpfApp.ViewModels
             }
         }
 
-        public Visit pVisit
-        {
-            get { return visit; }
-            set { SetProperty(ref visit, value); }
-        }
-
         public string StateInfo
         {
             get { return _stateInfo; }
@@ -74,7 +69,7 @@ namespace PatientСardWpfApp.ViewModels
 
         public static BindingList<string> SexTypes { get; private set; } = new BindingList<string>() { "Муж.", "Жен." };
         public static BindingList<PersonalCard> Patients { get; set; }
-
+        IDBLoader DBLoader { get; set; } = new DBDownload();
         public ICommand NewPatientProfile { get; private set; }
         public ICommand ProfileRemove { get; private set; }
         public ICommand OpenProfile { get; private set; }
@@ -83,16 +78,14 @@ namespace PatientСardWpfApp.ViewModels
         #endregion
 
         public ShellViewModel()
-        {
-            Patients = new BindingList<PersonalCard>();
-
+        {            
             VisitsHistoryShow = new DelegateCommand(ShowVisitsHistoryView);
             NewPatientProfile = new DelegateCommand(NewProfile);
             ProfileRemove = new DelegateCommand(RemoveProfile);
             OpenProfile = new DelegateCommand(EditProfile);
 
-            App.dBContent.PersonalCards.Load();
-            Patients = App.dBContent.PersonalCards.Local.ToBindingList();
+            Patients = new BindingList<PersonalCard>();
+            Patients = (BindingList<PersonalCard>)DBLoader.UpdateFromDB();
         }
 
         private void NewProfile()
@@ -141,13 +134,12 @@ namespace PatientСardWpfApp.ViewModels
         {
             if (SelectedPatient != null)
             {
-                var PHView = new VisitsHistoryView();
-                PHView.DataContext = new VisitsHistoryVM(SelectedPatient);
-                PHView.ShowDialog();
+                var VisitsWindow = new VisitsHistoryView();
+                VisitsWindow.DataContext = new VisitsHistoryVM(SelectedPatient);
+                VisitsWindow.ShowDialog();
             }
             else
                 return;
-                //throw new Exception("Невозможно отобразить данные. Укажите пациента из списка и повторите попытку.");
         }
         
     }

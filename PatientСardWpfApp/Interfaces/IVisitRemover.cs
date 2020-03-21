@@ -5,6 +5,6 @@ namespace PatientСardWpfApp.Interfaces
 {
     public interface IVisitRemover
     {
-        void DeletRecord(ref ObservableCollection<Visit> historyList, Visit record);
+        void DeletRecord(Visit record);
     }
 }

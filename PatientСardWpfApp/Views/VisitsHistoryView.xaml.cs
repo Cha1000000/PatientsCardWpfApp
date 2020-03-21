@@ -24,11 +24,6 @@ namespace PatientСardWpfApp.Views
             InitializeComponent();
         }
 
-        private void DataGridRow_LostFocus(object sender, RoutedEventArgs e)
-        {
-            dgHistory.UnselectAll();
-        }
-
         private void btExit_Click(object sender, RoutedEventArgs e)
         {
             Close();

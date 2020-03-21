@@ -32,7 +32,7 @@ namespace PatientСardWpfApp.Models
             set { SetProperty(ref _date, value); }
         }
 
-        [StringLength(15, MinimumLength = 8)]
+        [StringLength(15, MinimumLength = 5)]
         [Required(ErrorMessage = "Длина строки должна быть не менее 4 символов")]
         public string Type
         {

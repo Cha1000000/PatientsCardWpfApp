@@ -12,44 +12,28 @@ using System.Windows.Input;
 
 namespace PatientСardWpfApp.ViewModels
 {
+    /// <summary>
+    /// Модель логики Редактора записей посещений.
+    /// </summary>
     class VisitEditorVM : BindableBase
     {
-        private Visit _visit;
-        private PersonalCard _pacientCard;
+        public event EventHandler OnRequestClose;
+        private bool IsEdit { get; set; }
 
-        private DateTime _creationDate = DateTime.Now;
-        private string _type = "Первичный";
-        private string _diag;
-        
-        private int curWin = App.Current.Windows.Count - 2;
+        private Visit _visit;
+
+        private IValidator Validator = new DataValidate();
+        private IVisitsAdder Adder { get; set; } = new VisitAdd();
 
         #region Public Properties
-        public Visit Visit
+
+        public Visit curVisit
         {
             get { return _visit; }
             set { SetProperty(ref _visit, value); }
         }
-        
-        public DateTime Date
-        {
-            get { return _creationDate; }
-            set { SetProperty(ref _creationDate, value); }
-        }
 
-        public string Type
-        {
-            get { return _type; }
-            set { SetProperty(ref _type, value); }
-        }
-
-        public string Diagnosis
-        {
-            get { return _diag; }
-            set { SetProperty(ref _diag, value); }
-        }
-
-        IVisitsAdder Adder { get; set; } = new VisitAdd();
-
+        public bool isOK { get; set; } = false;
         #endregion
 
         #region Сохранить запись
@@ -61,29 +45,41 @@ namespace PatientСardWpfApp.ViewModels
             {
                 if (saveRecCommand == null)
                 {
-                    saveRecCommand = new DelegateCommand(SaveRecord);
+                    if (!IsEdit)
+                        saveRecCommand = new DelegateCommand(SaveNewRecord);
+                    else
+                        saveRecCommand = new DelegateCommand(SaveEditedRecord);
                 }
                 return saveRecCommand;
             }
         }
 
-        private void SaveRecord()
+        private void SaveNewRecord()
         {
-            if (_pacientCard != null)
-            Visit = Adder.NewVisitRecord(_pacientCard.Id, Date, Type, Diagnosis);
-            // Здесь должно быть обновление в БД
-            System.Windows.MessageBox.Show("Данные успешно сохранены.", "Сообщение");
-            App.Current.Windows[curWin].Close();
+            if (Validator.IsValid(curVisit))
+            {
+                Adder.NewVisitRecord(curVisit);
+                isOK = true;
+            }
+            else return;
+            OnRequestClose(this, new EventArgs());
         }
+
+        private void SaveEditedRecord()
+        {
+            if (Validator.IsValid(curVisit))
+                Adder.UpdateRecord(curVisit);
+            else return;
+            OnRequestClose(this, new EventArgs());
+        }
+
         #endregion
 
         //-----------------------------------------------------------------------------
-        public VisitEditorVM(PersonalCard PatientCard)
+        public VisitEditorVM(bool isEdit = false)
         {
-            if (PatientCard != null)
-                _pacientCard = PatientCard;
-            
+            IsEdit = isEdit;
         }
-        
+
     }
 }

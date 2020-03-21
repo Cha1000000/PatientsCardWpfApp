@@ -1,18 +1,22 @@
 ﻿using PatientСardWpfApp.Interfaces;
 using PatientСardWpfApp.Models;
-using System;
-using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace PatientСardWpfApp.Reposetory
 {
     public class VisitRemove : IVisitRemover
     {
-        public void DeletRecord(ref ObservableCollection<Visit> history, Visit record)
+        public void DeletRecord(Visit record)
         {
             if (record != null)
-                history.Remove(record);
-            else
-                throw new Exception("Ошибка удаления записи. Данные записи отсутствуют.");
+            {
+                var temp = App.dBContent.Visits.ToList();
+                var selecteditem = from t in App.dBContent.Visits
+                                   where t.Id == record.Id
+                                   select t;
+                App.dBContent.Visits.Remove(selecteditem.FirstOrDefault());
+                App.dBContent.SaveChanges();
+            }
         }
     }
 }
