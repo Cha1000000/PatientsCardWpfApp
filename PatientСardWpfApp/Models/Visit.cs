@@ -1,12 +1,13 @@
 ﻿using Prism.Mvvm;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace PatientСardWpfApp.Models
 {
     public class Visit : BindableBase
     {
         private int id;
-        private DateTime _date;
+        private DateTime _date = DateTime.Now.Date;
         private string _type;
         private string _diagnosis;
         private int pid;
@@ -24,23 +25,28 @@ namespace PatientСardWpfApp.Models
             set { SetProperty(ref pid, value); }
         }
 
+        [DataType(DataType.Date)]
         public DateTime Date
         {
             get { return _date; }
             set { SetProperty(ref _date, value); }
         }
 
+        [StringLength(15, MinimumLength = 8)]
+        [Required(ErrorMessage = "Длина строки должна быть не менее 4 символов")]
         public string Type
         {
             get { return _type; }
             set { SetProperty(ref _type, value); }
         }
 
-         public string Diagnosis
+        [StringLength(100)]
+        public string Diagnosis
         {
             get { return _diagnosis; }
             set { SetProperty(ref _diagnosis, value); }
         }
+
         #endregion
 
         public Visit() {  }

@@ -14,7 +14,7 @@ namespace PatientСardWpfApp.Models
         string _surname;
         string _patronymic;
         string _sex;
-        DateTime _birthday = new DateTime(1920,01,01);
+        DateTime _birthday = new DateTime(1920,01,01).Date;
         string _adress;
         string _phone;
 
@@ -62,7 +62,7 @@ namespace PatientСardWpfApp.Models
         }
 
         [Display(Name = "Дата рождения")]
-        [DataType(DataType.DateTime)]
+        [DataType(DataType.Date)]
         /*[StringLength(10)]
         public string Birthday
         {

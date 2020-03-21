@@ -15,6 +15,9 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -27,11 +30,8 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -158,6 +158,14 @@
     <Compile Include="Migrations\202003192312258_EditValidation.designer.cs">
       <DependentUpon>202003192312258_EditValidation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003210913313_ModelDateEdit.cs" />
+    <Compile Include="Migrations\202003210913313_ModelDateEdit.designer.cs">
+      <DependentUpon>202003210913313_ModelDateEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003210921207_AddValidDiagnosis.cs" />
+    <Compile Include="Migrations\202003210921207_AddValidDiagnosis.designer.cs">
+      <DependentUpon>202003210921207_AddValidDiagnosis.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppDBContent.cs" />
     <Compile Include="MyTheme.xaml.cs">
@@ -239,6 +247,12 @@
     <EmbeddedResource Include="Migrations\202003192312258_EditValidation.resx">
       <DependentUpon>202003192312258_EditValidation.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003210913313_ModelDateEdit.resx">
+      <DependentUpon>202003210913313_ModelDateEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003210921207_AddValidDiagnosis.resx">
+      <DependentUpon>202003210921207_AddValidDiagnosis.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -297,11 +311,18 @@
   <ItemGroup>
     <Resource Include="img\Exit_90x90.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DB\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DB\Patients.ldf">
+      <DependentUpon>Patients.mdf</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DB\Patients.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

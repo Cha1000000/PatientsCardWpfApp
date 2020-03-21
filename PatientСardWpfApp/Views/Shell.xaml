@@ -116,7 +116,7 @@
                     <DataGridTextColumn Header="Имя" Binding="{Binding Path=Name}" Width="40*"/>
                     <DataGridTextColumn Header="Отчество" Binding="{Binding Path=Patronymic}" Width="40*"/>
                     <DataGridTextColumn Header="Пол" Binding="{Binding Path=Sex}" Width="22*"/>
-                    <DataGridTextColumn Header="Дата рождения" Binding="{Binding Path=Birthday}" Width="37*"/>
+                    <DataGridTextColumn Header="Дата рождения" Binding="{Binding Path=Birthday, StringFormat=\{0:dd.MM.yyyy\}, ConverterCulture=ru}" Width="37*"/>
                     <DataGridTextColumn Header="Адрес" Binding="{Binding Path=Adress}" Width="75*"/>
                     <DataGridTextColumn Header="Телефон" Binding="{Binding Path=Phone}" Width="45*"/>
                     <!--<DataGridTextColumn Header="Последнее посещение" Binding="{Binding Path=LastVisit}" Width="55*" IsReadOnly="True"/>-->
