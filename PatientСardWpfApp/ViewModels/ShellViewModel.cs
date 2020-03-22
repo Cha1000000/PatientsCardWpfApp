@@ -16,6 +16,10 @@ namespace PatientСardWpfApp.ViewModels
 {
     class ShellViewModel : BindableBase
     {
+        private PersonalCard card;
+        private PersonalCard _selectedPatient;
+        private string _stateInfo;
+
         #region property DisplayName
         /// <summary>
         /// Represent DisplayName property
@@ -31,11 +35,7 @@ namespace PatientСardWpfApp.ViewModels
         /// </summary>
         private string _displayName = "Hospitalis Scrinium";
 
-        #endregion
-
-        private PersonalCard card;
-        private PersonalCard _selectedPatient;
-        private string _stateInfo;
+        #endregion        
 
         #region Public Properties
         public PersonalCard Card
@@ -69,7 +69,7 @@ namespace PatientСardWpfApp.ViewModels
 
         public static BindingList<string> SexTypes { get; private set; } = new BindingList<string>() { "Муж.", "Жен." };
         public static BindingList<PersonalCard> Patients { get; set; }
-        IDBLoader DBLoader { get; set; } = new DBDownload();
+
         public ICommand NewPatientProfile { get; private set; }
         public ICommand ProfileRemove { get; private set; }
         public ICommand OpenProfile { get; private set; }
@@ -77,8 +77,11 @@ namespace PatientСardWpfApp.ViewModels
 
         #endregion
 
+        IDBLoader DBLoader { get; set; } = new DBDownload();
+        IPatientRemover Remover { get; set; } = new PatientDataRemove();
+
         public ShellViewModel()
-        {            
+        {
             VisitsHistoryShow = new DelegateCommand(ShowVisitsHistoryView);
             NewPatientProfile = new DelegateCommand(NewProfile);
             ProfileRemove = new DelegateCommand(RemoveProfile);
@@ -119,28 +122,15 @@ namespace PatientСardWpfApp.ViewModels
                                 "Подтвердите действие",
                                 MessageBoxButton.YesNo,
                                 MessageBoxImage.Question) == MessageBoxResult.Yes)
-                if (SelectedPatient != null)
-                {
-                    List<PersonalCard> temp = App.dBContent.PersonalCards.ToList();
-                    var selecteditem = from t in App.dBContent.PersonalCards
-                                       where SelectedPatient.Id == t.Id
-                                       select t;
-                    App.dBContent.PersonalCards.Remove(selecteditem.FirstOrDefault());
-                    App.dBContent.SaveChanges();
-                }
+                Remover.DeleteProfile(SelectedPatient);
         }
 
         private void ShowVisitsHistoryView()
         {
-            if (SelectedPatient != null)
-            {
-                var VisitsWindow = new VisitsHistoryView();
-                VisitsWindow.DataContext = new VisitsHistoryVM(SelectedPatient);
-                VisitsWindow.ShowDialog();
-            }
-            else
-                return;
+            var VisitsWindow = new VisitsHistoryView();
+            VisitsWindow.DataContext = new VisitsHistoryVM(SelectedPatient);
+            VisitsWindow.ShowDialog();
         }
-        
+
     }
 }
