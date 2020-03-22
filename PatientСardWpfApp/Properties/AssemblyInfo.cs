@@ -5,11 +5,11 @@ using System.Windows;
 // Общие сведения об этой сборке предоставляются следующим набором
 // набор атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
 // связанные со сборкой.
-[assembly: AssemblyTitle("Картотека пациентов")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Hospitalis Scrinium (Картотека пациентов)")]
+[assembly: AssemblyDescription("Приложение для работы с базой данных пациентов и регистрации истории их посещений.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("PatientСardWpfApp")]
+[assembly: AssemblyProduct("Hospitalis Scrinium")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
