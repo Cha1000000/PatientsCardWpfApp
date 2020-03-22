@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data.Entity;
-using System.Linq;
-using System.Windows;
-using System.Windows.Input;
-using PatientСardWpfApp.Interfaces;
+﻿using PatientСardWpfApp.Interfaces;
 using PatientСardWpfApp.Models;
-using PatientСardWpfApp.Reposetory;
 using PatientСardWpfApp.Views;
 using Prism.Commands;
 using Prism.Mvvm;
+using System.ComponentModel;
+using System.Windows;
+using System.Windows.Input;
 
 namespace PatientСardWpfApp.ViewModels
 {
@@ -77,11 +72,20 @@ namespace PatientСardWpfApp.ViewModels
 
         #endregion
 
-        IDBLoader DBLoader { get; set; } = new DBDownload();
-        IPatientRemover Remover { get; set; } = new PatientDataRemove();
+        IDBLoader DBLoader;
+        IPatientRemover Remover;
+        IValidator Validator;
+        IProfileAdder ProfileAdder;
+        IVisitRemover VRemover;
 
-        public ShellViewModel()
+        public ShellViewModel(IDBLoader loader, IPatientRemover remover, IValidator validator, IProfileAdder profileAdder, IVisitRemover vRemover)
         {
+            DBLoader = loader;
+            Remover = remover;
+            Validator = validator;
+            ProfileAdder = profileAdder;
+            VRemover = vRemover;
+
             VisitsHistoryShow = new DelegateCommand(ShowVisitsHistoryView);
             NewPatientProfile = new DelegateCommand(NewProfile);
             ProfileRemove = new DelegateCommand(RemoveProfile);
@@ -93,7 +97,7 @@ namespace PatientСardWpfApp.ViewModels
 
         private void NewProfile()
         {
-            var vm = new ProfileViewModel(null);
+            var vm = new ProfileViewModel(Validator, ProfileAdder, null);
             var ProfileWin = new ProfileView
             {
                 DataContext = vm
@@ -106,7 +110,7 @@ namespace PatientСardWpfApp.ViewModels
         {
             if (_selectedPatient != null)
             {
-                var vm = new ProfileViewModel(SelectedPatient, true);
+                var vm = new ProfileViewModel(Validator, ProfileAdder, SelectedPatient, true);
                 var ProfileWin = new ProfileView
                 {
                     DataContext = vm
@@ -128,7 +132,7 @@ namespace PatientСardWpfApp.ViewModels
         private void ShowVisitsHistoryView()
         {
             var VisitsWindow = new VisitsHistoryView();
-            VisitsWindow.DataContext = new VisitsHistoryVM(SelectedPatient);
+            VisitsWindow.DataContext = new VisitsHistoryVM(SelectedPatient, VRemover);
             VisitsWindow.ShowDialog();
         }
 

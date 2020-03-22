@@ -1,9 +1,9 @@
-﻿using System.Windows;
-using CommonServiceLocator;
-using PatientСardWpfApp.Views;
+﻿using CommonServiceLocator;
 using PatientСardWpfApp.Interfaces;
 using PatientСardWpfApp.Reposetory;
+using PatientСardWpfApp.Views;
 using Prism.Unity;
+using System.Windows;
 
 namespace PatientСardWpfApp
 {
@@ -34,6 +34,7 @@ namespace PatientСardWpfApp
             RegisterTypeIfMissing(typeof(IValidator), typeof(DataValidate), true);
             RegisterTypeIfMissing(typeof(IDBLoader), typeof(DBDownload), true);
             RegisterTypeIfMissing(typeof(IPatientRemover), typeof(PatientDataRemove), true);
+            RegisterTypeIfMissing(typeof(IProfileAdder), typeof(PatientDataSaver), true);
 
             /*Container.RegisterInstance<CallbackLogger>(this.callbackLogger);*/
         }

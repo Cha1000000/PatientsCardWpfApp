@@ -1,5 +1,4 @@
 ﻿using PatientСardWpfApp.Models;
-using System.Collections.ObjectModel;
 
 namespace PatientСardWpfApp.Interfaces
 {

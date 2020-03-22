@@ -1,6 +1,6 @@
-﻿using System.ComponentModel;
+﻿using PatientСardWpfApp.Interfaces;
+using System.ComponentModel;
 using System.Data.Entity;
-using PatientСardWpfApp.Interfaces;
 
 namespace PatientСardWpfApp.Reposetory
 {

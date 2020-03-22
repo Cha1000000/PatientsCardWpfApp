@@ -1,9 +1,7 @@
 ﻿
 using Prism.Mvvm;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Globalization;
 
 namespace PatientСardWpfApp.Models
 {
@@ -14,7 +12,7 @@ namespace PatientСardWpfApp.Models
         string _surname;
         string _patronymic;
         string _sex;
-        DateTime _birthday = new DateTime(1920,01,01).Date;
+        DateTime _birthday = new DateTime(1920, 01, 01).Date;
         string _adress;
         string _phone;
 
@@ -45,7 +43,7 @@ namespace PatientСardWpfApp.Models
 
         [Display(Name = "Отчество")]
         [StringLength(25, MinimumLength = 6)]
-        [Required(ErrorMessage = "Длина отчества не менее 6 символов", AllowEmptyStrings =true)]
+        [Required(ErrorMessage = "Длина отчества не менее 6 символов", AllowEmptyStrings = true)]
         public string Patronymic
         {
             get { return _patronymic; }
@@ -88,7 +86,7 @@ namespace PatientСardWpfApp.Models
         [DataType(DataType.PhoneNumber)]
         [StringLength(16)]
         [RegularExpression(@"^\+[1-9]\d{3}-\d{3}-\d{2}-\d{2}$", ErrorMessage = "Номер телефона должен иметь формат +xxxx-xxx-xx-xx")]
-        [Required(AllowEmptyStrings =true)]
+        [Required(AllowEmptyStrings = true)]
         public string Phone
         {
             get { return _phone; }
@@ -97,7 +95,7 @@ namespace PatientСardWpfApp.Models
 
         #endregion
 
-        public PersonalCard() {  }
+        public PersonalCard() { }
         public PersonalCard(int id, string surname, string name, string patronymic, string sex, DateTime birthday, string phone, string adress)
         {
             Id = id;

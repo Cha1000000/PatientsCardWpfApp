@@ -143,35 +143,8 @@
     </ApplicationDefinition>
     <Compile Include="Interfaces\IDBLoader.cs" />
     <Compile Include="Interfaces\IPatientRemover.cs" />
+    <Compile Include="Interfaces\IProfileAdder.cs" />
     <Compile Include="Interfaces\IValidator.cs" />
-    <Compile Include="Migrations\202003191620171_InitialCreate.cs" />
-    <Compile Include="Migrations\202003191620171_InitialCreate.designer.cs">
-      <DependentUpon>202003191620171_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003191942086_AddPatUrl.cs" />
-    <Compile Include="Migrations\202003191942086_AddPatUrl.designer.cs">
-      <DependentUpon>202003191942086_AddPatUrl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003192308373_AddValidation.cs" />
-    <Compile Include="Migrations\202003192308373_AddValidation.designer.cs">
-      <DependentUpon>202003192308373_AddValidation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003192312258_EditValidation.cs" />
-    <Compile Include="Migrations\202003192312258_EditValidation.designer.cs">
-      <DependentUpon>202003192312258_EditValidation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003210913313_ModelDateEdit.cs" />
-    <Compile Include="Migrations\202003210913313_ModelDateEdit.designer.cs">
-      <DependentUpon>202003210913313_ModelDateEdit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003210921207_AddValidDiagnosis.cs" />
-    <Compile Include="Migrations\202003210921207_AddValidDiagnosis.designer.cs">
-      <DependentUpon>202003210921207_AddValidDiagnosis.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003212152220_ChTypeValid.cs" />
-    <Compile Include="Migrations\202003212152220_ChTypeValid.designer.cs">
-      <DependentUpon>202003212152220_ChTypeValid.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppDBContent.cs" />
     <Compile Include="MyTheme.xaml.cs">
@@ -180,6 +153,7 @@
     <Compile Include="Reposetory\DataValidate.cs" />
     <Compile Include="Reposetory\DBDownload.cs" />
     <Compile Include="Reposetory\PatientDataRemove.cs" />
+    <Compile Include="Reposetory\PatientDataSaver.cs" />
     <Compile Include="ViewModels\ProfileViewModel.cs" />
     <Compile Include="ViewModels\VisitEditorVM.cs" />
     <Compile Include="Views\ProfileView.xaml.cs">
@@ -243,27 +217,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\202003191620171_InitialCreate.resx">
-      <DependentUpon>202003191620171_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003191942086_AddPatUrl.resx">
-      <DependentUpon>202003191942086_AddPatUrl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003192308373_AddValidation.resx">
-      <DependentUpon>202003192308373_AddValidation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003192312258_EditValidation.resx">
-      <DependentUpon>202003192312258_EditValidation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003210913313_ModelDateEdit.resx">
-      <DependentUpon>202003210913313_ModelDateEdit.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003210921207_AddValidDiagnosis.resx">
-      <DependentUpon>202003210921207_AddValidDiagnosis.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003212152220_ChTypeValid.resx">
-      <DependentUpon>202003212152220_ChTypeValid.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

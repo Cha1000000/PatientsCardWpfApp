@@ -1,22 +1,22 @@
-﻿using PatientСardWpfApp.Models;
-using PatientСardWpfApp.Interfaces;
-using Prism.Mvvm;
-using System.Windows;
-using System.ComponentModel;
-using System.Windows.Input;
+﻿using PatientСardWpfApp.Interfaces;
+using PatientСardWpfApp.Models;
 using PatientСardWpfApp.Views;
 using Prism.Commands;
-using System.Collections.ObjectModel;
-using PatientСardWpfApp.Reposetory;
+using Prism.Mvvm;
+using System;
+using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
-using System.Collections.Generic;
-using System;
+using System.Windows;
+using System.Windows.Input;
 
 namespace PatientСardWpfApp.ViewModels
 {
     class VisitsHistoryVM : BindableBase
     {
+        private Visit _selectedRecord;
+        private PersonalCard _patientCard;
+
         #region property DisplayName
         private string _displayName = "История посещений пациента";
 
@@ -27,15 +27,14 @@ namespace PatientСardWpfApp.ViewModels
         }
         #endregion
 
-        private Visit _selectedRecord;
-        private PersonalCard _patientCard;
-
         #region Public Properties
         public Visit SelectedRecord
         {
             get { return _selectedRecord; }
-            set { SetProperty(ref _selectedRecord, value);
-                  BtVisibility = (_selectedRecord != null) ? Visibility.Visible : Visibility.Hidden;
+            set
+            {
+                SetProperty(ref _selectedRecord, value);
+                BtVisibility = (_selectedRecord != null) ? Visibility.Visible : Visibility.Hidden;
             }
         }
 
@@ -48,16 +47,18 @@ namespace PatientСardWpfApp.ViewModels
 
         public static BindingList<Visit> PatientVisitsHistory { get; set; }
 
-        IVisitRemover Remover { get; set; } = new VisitRemove();
-        IDBLoader DBLoader { get; set; } = new DBDownload();
+        IVisitRemover Remover;
 
         public ICommand AddNewRecordCommand { get; private set; }
         public ICommand RemoveRecordCommand { get; private set; }
         public ICommand EditRecordCommand { get; private set; }
         #endregion
-        //----------------------------------------------------------------------------------------------
-        public VisitsHistoryVM(PersonalCard Patient)
+
+        //------------------------------------------------------------------
+        public VisitsHistoryVM(PersonalCard Patient, IVisitRemover remover)
         {
+            Remover = remover;
+
             if (Patient != null)
             {
                 _patientCard = Patient;
@@ -73,7 +74,7 @@ namespace PatientСardWpfApp.ViewModels
         }
 
         private void HistoryListUpdate()
-        {
+        {// Загрузка выборки истории по выбранному пациенту из БД
             App.dBContent.Visits.Load();
             PatientVisitsHistory = new BindingList<Visit>(App.dBContent.Visits.Local.Where(x => x.PatientId.Equals(_patientCard.Id)).ToList());
         }
@@ -104,7 +105,7 @@ namespace PatientСardWpfApp.ViewModels
                                 "Подтвердите действие",
                                 MessageBoxButton.YesNo,
                                 MessageBoxImage.Question) == MessageBoxResult.Yes)
-            Remover.DeletRecord(SelectedRecord);
+                Remover.DeletRecord(SelectedRecord);
             PatientVisitsHistory.Remove(SelectedRecord);
         }
 

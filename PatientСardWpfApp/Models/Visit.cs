@@ -49,7 +49,7 @@ namespace PatientСardWpfApp.Models
 
         #endregion
 
-        public Visit() {  }
+        public Visit() { }
 
         public Visit(int Pid, DateTime dateTime, string vType, string diagnosis)
         {

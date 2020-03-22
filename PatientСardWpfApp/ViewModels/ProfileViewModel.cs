@@ -1,15 +1,9 @@
-﻿using PatientСardWpfApp.Models;
-using PatientСardWpfApp.Interfaces;
+﻿using PatientСardWpfApp.Interfaces;
+using PatientСardWpfApp.Models;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Data.Entity;
-using System.Windows;
 using System.Windows.Input;
-using PatientСardWpfApp.Reposetory;
 
 namespace PatientСardWpfApp.ViewModels
 {
@@ -18,7 +12,8 @@ namespace PatientСardWpfApp.ViewModels
         public event EventHandler OnRequestClose;
         private bool IsEdit { get; set; }
 
-        private IValidator Validator = new DataValidate();
+        IValidator Validator;
+        IProfileAdder ProfileAdder;
 
         #region Public Properties
 
@@ -51,53 +46,29 @@ namespace PatientСardWpfApp.ViewModels
 
         private void SaveNewRecord()
         {
-            if (Patient != null)
-            {
-                if (Validator.IsValid(Patient))
-                {
-                    App.dBContent.PersonalCards.Add(Patient);
-                    App.dBContent.SaveChanges();
-                }
-                else return;
-            }
-            else
-                MessageBox.Show("Ошибка сохранения записи.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            if (Validator.IsValid(Patient))
+                ProfileAdder.SaveNewProfile(Patient);
+            else return;
 
             OnRequestClose(this, new EventArgs());
         }
 
         private void SaveEditedRecord()
         {
-            if (Patient != null)
-            {
-                if (Validator.IsValid(Patient))
-                {
-                    var p = App.dBContent.PersonalCards.Find(Patient.Id);
-                    if (p != null)
-                    {
-                        p.Name = Patient.Name;
-                        p.Surname = Patient.Surname;
-                        p.Patronymic = Patient.Patronymic;
-                        p.Sex = Patient.Sex;
-                        p.Birthday = Patient.Birthday;
-                        p.Phone = Patient.Phone;
-                        p.Adress = Patient.Adress;
-                        App.dBContent.Entry(p).State = EntityState.Modified;
-                        App.dBContent.SaveChanges();
-                    }
-                }
-                else return;
-            }
-            else
-                MessageBox.Show("Ошибка сохранения записи.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            if (Validator.IsValid(Patient))
+                ProfileAdder.UpdateRecord(Patient);
+            else return;
 
             OnRequestClose(this, new EventArgs());
         }
         #endregion
 
         //-----------------------------------------------------------------------------
-        public ProfileViewModel(PersonalCard patientData, bool isEdit = false)
-        {            
+        public ProfileViewModel(IValidator valid, IProfileAdder profileAdder, PersonalCard patientData, bool isEdit = false)
+        {
+            Validator = valid;
+            ProfileAdder = profileAdder;
+
             if (patientData != null)
                 Patient = new PersonalCard()
                 {
@@ -112,7 +83,7 @@ namespace PatientСardWpfApp.ViewModels
                 };
             else
                 Patient = new PersonalCard();
-            
+
             IsEdit = isEdit;
         }
 

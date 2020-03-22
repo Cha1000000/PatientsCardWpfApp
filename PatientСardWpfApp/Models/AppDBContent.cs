@@ -4,7 +4,7 @@ namespace PatientСardWpfApp.Models
 {
     public class AppDBContent : DbContext
     {
-        public AppDBContent(): base("DefaultConnection")
+        public AppDBContent() : base("DefaultConnection")
         {
 
         }

@@ -33,5 +33,5 @@ namespace PatientСardWpfApp
             var W = sender as System.Windows.Controls.Button;
             Application.Current.MainWindow.WindowState = (Application.Current.MainWindow.WindowState == WindowState.Maximized) ? WindowState.Normal : WindowState.Maximized;
         }
-    }    
+    }
 }

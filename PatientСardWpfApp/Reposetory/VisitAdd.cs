@@ -1,9 +1,8 @@
-﻿using PatientСardWpfApp.Models;
-using PatientСardWpfApp.Interfaces;
+﻿using PatientСardWpfApp.Interfaces;
+using PatientСardWpfApp.Models;
 using System;
-using System.Collections.ObjectModel;
-using System.Windows;
 using System.Data.Entity;
+using System.Windows;
 
 namespace PatientСardWpfApp.Reposetory
 {
@@ -12,7 +11,6 @@ namespace PatientСardWpfApp.Reposetory
         /// <summary>
         /// Добавление новой записи о посещении в БД
         /// </summary>
-        /// <param name="patientID">ID пациента</param>
         /// <param name="visitData">Объект с данными записей посещения</param>
         public void NewVisitRecord(Visit visitData)
         {
@@ -21,7 +19,7 @@ namespace PatientСardWpfApp.Reposetory
                 App.dBContent.Visits.Add(visitData);
                 App.dBContent.SaveChanges();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 string errorText = $"Ошибка сохранения записи.\nПодробнее: {ex.ToString()}";
                 MessageBox.Show(errorText, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -38,16 +36,16 @@ namespace PatientСardWpfApp.Reposetory
             {
                 var dbRecord = App.dBContent.Visits.Find(visitData.Id);
                 if (dbRecord != null)
-                {                    
+                {
                     dbRecord.Date = visitData.Date;
                     dbRecord.Type = visitData.Type;
                     dbRecord.Diagnosis = visitData.Diagnosis;
-                    
+
                     App.dBContent.Entry(dbRecord).State = EntityState.Modified;
                     App.dBContent.SaveChanges();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 string errorText = $"Ошибка сохранения записи.\nПодробнее: {ex.ToString()}";
                 MessageBox.Show(errorText, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);

@@ -35,11 +35,11 @@ namespace PatientСardWpfApp.Reposetory
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 string error = "Возникла ошибка во время удаления записей посещений пациента." +
                                $"\n\nИнформация об ошибке: {ex.ToString()}";
-                MessageBox.Show(error, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);     
+                MessageBox.Show(error, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
             // Теперь можно удалять запись самого пациента:
