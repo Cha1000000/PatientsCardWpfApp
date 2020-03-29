@@ -34,7 +34,9 @@ namespace PatientСardWpfApp.ViewModels
             set
             {
                 SetProperty(ref _selectedRecord, value);
-                BtVisibility = (_selectedRecord != null) ? Visibility.Visible : Visibility.Hidden;
+                BtVisibility = (_selectedRecord?.Id != 0 &&
+                                _selectedRecord?.Id != null) ? 
+                                Visibility.Visible : Visibility.Hidden;
             }
         }
 

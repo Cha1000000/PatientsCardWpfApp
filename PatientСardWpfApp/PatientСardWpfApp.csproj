@@ -275,7 +275,9 @@
   <ItemGroup>
     <Resource Include="img\Exit_90x90.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="img\Cancel.png" />
+  </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>

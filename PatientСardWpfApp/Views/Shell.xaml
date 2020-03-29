@@ -33,6 +33,7 @@
             <Setter Property="Background" Value="#060E1F"/>
             <Setter Property="BorderBrush" Value="#0078d7"/>
             <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="20"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -122,7 +123,7 @@
             </DataGrid>
         </Grid>
 
-        <Grid Grid.Column="2" Margin="10">
+        <Grid Grid.Column="2" Margin="10,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="39*"/>
                 <RowDefinition Height="79*"/>
@@ -132,8 +133,8 @@
                 <RowDefinition Height="79*"/>
                 <RowDefinition Height="15*"/>
                 <RowDefinition Height="79*"/>
-                <RowDefinition Height="141*"/>
-                <RowDefinition Height="93*"/>
+                <RowDefinition Height="150*"/>
+                <RowDefinition Height="79*"/>
             </Grid.RowDefinitions>
 
             <Button x:Name="btAddNewPatient" Grid.Row="1" Style="{StaticResource MyButtonStyle}" 
