@@ -14,7 +14,6 @@
         <Image x:Key="ImageAdd" Source="/img/plus.png"/>
         <Image x:Key="ImageDel" Source="/img/minus.png"/>
         <Image x:Key="ImageEdit" Source="/img/Edit.png"/>
-        <Image x:Key="ImageExit"  Source="/img/Exit.png"/>
         <Image x:Key="ImgCancel"  Source="/img/Cancel.png"/>
 
         <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource AzureDataGridRow}" x:Key="TableRowStyle">
