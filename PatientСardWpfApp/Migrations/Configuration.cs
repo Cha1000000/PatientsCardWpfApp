@@ -6,7 +6,7 @@
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
             ContextKey = "PatientСardWpfApp.Models.AppDBContent";
         }
 

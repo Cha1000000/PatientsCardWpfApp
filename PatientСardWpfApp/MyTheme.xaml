@@ -76,7 +76,7 @@
                             <Border Background="{TemplateBinding Background}" Grid.Row="1" Name="TopLine">
                                 <AdornerDecorator>
                                     <ContentPresenter Margin="{TemplateBinding Padding}"
-                                                          Content="{TemplateBinding Content}"/>
+                                                      Content="{TemplateBinding Content}"/>
                                 </AdornerDecorator>
                             </Border>
 
